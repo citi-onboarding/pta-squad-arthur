@@ -1,20 +1,24 @@
-import Image from "next/image";
-
-import { LogoCITi } from "../assets";
+import { Button } from "@/components/ui/button"; // 1. Importe seu componente aqui
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col h-full justify-around items-center bg-black">
-      <div>
-        <Image src={LogoCITi} alt="Logo citi" />
-      </div>
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-white text-4xl font-bold">NextJS Boilerplate</h1>
-        <p className="text-white text-xl">
-          Made with <strong>&lt; &#x0002F; &gt;</strong> and{" "}
-          <strong>&hearts;</strong> by CITi
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
+      
+      <div className="text-center space-y-6">
+        <p className="text-sm text-gray-500 font-mono uppercase tracking-widest">
+          Área de Teste
         </p>
+
+        {/* 2. Coloque seu componente dentro desta caixa div, substituindo o Button */}
+        <div className="flex items-center justify-center p-12 border-2 border-dashed border-gray-300 rounded-xl bg-white">
+          
+          <Button>
+            Teste seu componente aqui
+          </Button>
+
+        </div>
       </div>
-    </div>
+
+    </main>
   );
 }
