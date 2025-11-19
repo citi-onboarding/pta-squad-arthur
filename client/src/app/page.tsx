@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"; // 1. Importe seu componente aqui
+import { NovaConsultaModal } from "@/components/details/NovaConsultaModal";
 
 export default function Home() {
   return (
@@ -12,9 +13,7 @@ export default function Home() {
         {/* 2. Coloque seu componente dentro desta caixa div, substituindo o Button */}
         <div className="flex items-center justify-center p-12 border-2 border-dashed border-gray-300 rounded-xl bg-white">
           
-          <Button>
-            Teste seu componente aqui
-          </Button>
+         <NovaConsultaModal />
 
         </div>
       </div>
