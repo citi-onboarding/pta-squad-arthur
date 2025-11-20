@@ -6,12 +6,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -20,6 +18,7 @@ import { Label } from "@/components/ui/label"
 
 export function RegistrationModal() {
     return (
+
         <Dialog>
             <form>
 
@@ -44,7 +43,7 @@ export function RegistrationModal() {
                     <div className="grid gap-4">
                         <div className="grid gap-3">
                             <Label htmlFor="tutorsEmail">E-mail</Label>
-                            <Input id="tutorsEmail" name="name" className="border-black" />
+                            <Input id="tutorsEmail" name="name" className="border-black" type="email" />
                         </div>
 
                     </div>
