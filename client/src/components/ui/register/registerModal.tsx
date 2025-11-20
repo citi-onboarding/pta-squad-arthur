@@ -38,7 +38,7 @@ export function RegistrationModal() {
                             <div className="text-center mb-4  text-black">
                                 <strong className="font-bold">Cadastro finalizado!</strong> Envie o <br /> comprovante para o <strong className="font-bold text-black">tutor</strong>
                             </div>
-                        </DialogDescription>""
+                        </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4">
                         <div className="grid gap-3">
