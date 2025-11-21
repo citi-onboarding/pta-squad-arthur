@@ -60,10 +60,10 @@ export function NovaConsultaModal() {
             max-h-[90vh]  
             rounded-[24px]     
             bg-white 
-            p-[48px]          
+            p-12         
             flex                 
             flex-col            
-            gap-[29px]      
+            gap-7   
           "
         >
 
@@ -91,17 +91,17 @@ export function NovaConsultaModal() {
 
             {/* Tipo de consulta. Conecta o Select ao estado tipoConsulta.  */}
             <div className="flex flex-col space-y-1">
-              <Label>
+              <Label className="text-base font-bold  text-black leading-[110%] ">
                 Tipo de consulta
               </Label>
               <Select value={tipoConsulta} onValueChange={setTipoConsulta}>
                 <SelectTrigger className="
                   w-full               
-                  h-[50px]             
+                  h-12           
                   rounded-[8px]        
-                  border-[1px]         
-                  border-[#101010]     
-                  p-[16px]             
+                  border-[1px]   
+                  border-[#101010]  
+                  p-4   
                   text-base            
                   placeholder:text-gray-400">
                   <SelectValue placeholder="Selecione aqui" />
@@ -121,7 +121,7 @@ export function NovaConsultaModal() {
 
             {/* Médico Responsável. Usa o useState para pegar o que for digitado. */}
             <div className="flex flex-col space-y-1">
-              <Label>
+              <Label className="text-base font-bold  text-black leading-[110%] ">
                 Médico Responsável
               </Label>
               <Input
@@ -129,13 +129,14 @@ export function NovaConsultaModal() {
                 value={medico}
                 onChange={(e) => setMedico(e.target.value)}
                 required
+                className="w-full h-12 rounded-[8px] border-[1px] border-[#101010] p-4 text-base placeholder:text-gray-400"
               />
             </div>
 
             {/* Data. Também usa o useState para pegar a informação e o [&::-webkit-calendar-picker-indicator]:hidden, serve para
             esconder o símbolo padrão do navegador*/}
             <div className="flex flex-col space-y-1">
-              <Label>
+              <Label className="text-base font-bold  text-black leading-[110%] ">
                     Data do atendimento
               </Label>
               <div className="relative">
@@ -145,10 +146,10 @@ export function NovaConsultaModal() {
                 onChange={(e) => setDataAtendimento(e.target.value)}
                 required
                 className="
+                  w-full h-12 rounded-[8px] border-[1px] border-[#101010] p-4 text-base placeholder:text-gray-400
                  [&::-webkit-calendar-picker-indicator]:hidden"
               />
               <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
-                  {/* Ícone manual */}
                   <Image 
                     src={CalendarIcon} 
                     width={20} 
@@ -162,7 +163,7 @@ export function NovaConsultaModal() {
 
             {/* Horário. Basicamente a mesma coisa da data*/}
             <div className="flex flex-col space-y-1">
-              <Label>
+              <Label className="text-base font-bold  text-black leading-[110%] ">
                     Horário do atendimento
               </Label>
               <div className="relative">
@@ -172,6 +173,7 @@ export function NovaConsultaModal() {
                   onChange={(e) => setHorarioAtendimento(e.target.value)}
                   required
                   className=" 
+                  w-full h-12 rounded-[8px] border-[1px] border-[#101010] p-4 text-base placeholder:text-gray-400
                   [&::-webkit-calendar-picker-indicator]:hidden"
                 />
                 <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
@@ -190,7 +192,7 @@ export function NovaConsultaModal() {
               type="submit"
               className="
                 w-full   
-                h-auto          
+                h-auto         
                 px-[32px]      
                 py-[12px]        
                 rounded-[24px]     
