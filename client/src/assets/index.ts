@@ -9,8 +9,6 @@ import Cow from "./Cow.svg";
 import Horse from "./Horse.svg";
 import Dog from "./DOG.png";
 
-export { LogoCITi, LogoCITiPet, MadeWithLove };
-
 export {
   LogoCITi,
   LogoCITiPet,
