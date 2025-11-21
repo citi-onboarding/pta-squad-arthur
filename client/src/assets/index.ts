@@ -8,6 +8,8 @@ import Pig from "./Pig.svg";
 import Cow from "./Cow.svg";
 import Horse from "./Horse.svg";
 import Dog from "./DOG.png";
+import CalendarIcon from "./calendar.png";
+import AlarmIcon from "./alarm.png";
 
 export {
   LogoCITi,
@@ -19,5 +21,7 @@ export {
   Horse,
   Pig,
   Dog,
-  Cat
+  Cat,
+  CalendarIcon,
+  AlarmIcon,
 };
