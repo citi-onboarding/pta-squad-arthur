@@ -1,6 +1,6 @@
 import LogoCITi from "./Logo.png";
 import LogoCITiPet from "./LogoCITiPet.svg";
-import MadeWithLove from "./madewithlove.svg";
+import MadeWithLove from "./MadeWithLove.svg";
 import Clock from "./Clock.svg";
 import Sheep from "./Sheep.svg";
 import Cat from "./Cat.svg";
