@@ -6,6 +6,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
@@ -73,13 +74,13 @@ export function NovaConsultaModal() {
           <Image src={LogoCITi} width={189} height={74} alt="Citi Logo" />
         </div>
         <DialogHeader className="flex justify-center">
-        <p className="text-center text-lg font-normal leading-tight">
+        <DialogTitle className="text-center text-lg font-normal leading-tight">
           <span className="font-semibold">
             O pet já está cadastrado no sistema!
           </span>{" "}
           Preencha os dados da{" "}
           <span className="font-semibold">consulta</span>
-        </p>
+        </DialogTitle>
       </DialogHeader>
 
 
