@@ -79,7 +79,6 @@ export function RegistrationModal() {
         let newErrors = { tutorsEmail: "", apiError: "" };
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // simple regex for email
 
-        // 1. Validação de Campo Vazio
         if (!formData.tutorsEmail.trim()) {
             newErrors.tutorsEmail = "O e-mail do tutor é obrigatório.";
             isValid = false;
