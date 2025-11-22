@@ -16,8 +16,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ValueIcon } from "@radix-ui/react-icons/dist/ValueIcon";
-import { ApiError } from "next/dist/server/api-utils";
 
 
 export function RegistrationModal() {
