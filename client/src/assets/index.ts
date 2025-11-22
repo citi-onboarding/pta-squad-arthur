@@ -1,4 +1,3 @@
-import LogoCITi from "./Logo.png";
 import ArrowBack from "./arrow_back.png";
 import LogoCITiPet from "./LogoCITiPet.svg";
 import MadeWithLove from "./MadeWithLove.svg";
@@ -13,7 +12,6 @@ import CalendarIcon from "./calendar.png";
 import AlarmIcon from "./alarm.png";
 
 export {
-  LogoCITi,
   ArrowBack,
   LogoCITiPet,
   MadeWithLove,

@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { LogoCITi, CalendarIcon, AlarmIcon } from "@/assets";
+import { LogoCITiPet, CalendarIcon, AlarmIcon } from "@/assets";
 
 export function NovaConsultaModal() {
   const [medico, setMedico] = useState('');
@@ -71,7 +71,7 @@ export function NovaConsultaModal() {
 
         {/* Logo. DialogHeader serve para acessibilidade */}
         <div className="flex justify-center mb-2">
-          <Image src={LogoCITi} width={189} height={74} alt="Citi Logo" />
+          <Image src={LogoCITiPet} width={189} height={74} alt="Citi Logo" />
         </div>
         <DialogHeader className="flex justify-center">
         <DialogTitle className="text-center text-lg font-normal leading-tight">
