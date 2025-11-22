@@ -121,7 +121,7 @@ export function RegistrationModal() {
                     <div className="grid gap-4">
                         <div className="grid gap-3">
                             <Label htmlFor="tutorsEmail">E-mail</Label>
-                            <Input id="tutorsEmail" name="tutorsEmail" className="border-black" type="email" value={formData.tutorsEmail} onChange={handleChange} required />
+                            <Input id="tutorsEmail" name="tutorsEmail" className="border-black pl-4" type="email" value={formData.tutorsEmail} onChange={handleChange} required placeholder="Digite aqui..." />
 
                             {errors.tutorsEmail && (<p className="text-red-500 text-sm mt-1">{errors.tutorsEmail}</p>)}
                         </div>
