@@ -1,51 +1,80 @@
-import { Request, Response } from "express";
-import { Citi, Crud } from "../global";
+import { Request, Response, NextFunction } from 'express';
+import userRepository from 'src/repositories/userRepository';
+import { User, UpdateUser } from 'src/DTOs/User';
 
-class UserController implements Crud {
-  constructor(private readonly citi = new Citi("User")) {}
-  create = async (request: Request, response: Response) => {
-    const { firstName, lastName, age } = request.body;
+class UserController {
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userData = User.parse(req.body);
+      const user = await userRepository.create(userData);
 
-    const isAnyUndefined = this.citi.areValuesUndefined(
-      firstName,
-      lastName,
-      age
-    );
-    if (isAnyUndefined) return response.status(400).send();
+      return res.status(201).json({
+        message: 'User created',
+        data: user,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
 
-    const newUser = { firstName, lastName, age };
-    const { httpStatus, message } = await this.citi.insertIntoDatabase(newUser);
+  async findAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = await userRepository.findAll();
 
-    return response.status(httpStatus).send({ message });
-  };
+      return res.status(200).json(users);
+    } catch (error) {
+      return next(error);
+    }
+  }
 
-  get = async (request: Request, response: Response) => {
-    const { httpStatus, values } = await this.citi.getAll();
+  async findById(req: Request, res: Response, next: NextFunction) {
+    try {
 
-    return response.status(httpStatus).send(values);
-  };
+      const { id } = req.params;
+      const user = await userRepository.findById(parseInt(id));
 
-  delete = async (request: Request, response: Response) => {
-    const { id } = request.params;
+      if (!user) {
+        return next({
+          status: 404,
+          message: 'User not found',
+        });
+      }
 
-    const { httpStatus, messageFromDelete } = await this.citi.deleteValue(id);
+      return res.status(200).json(user);
+    } catch (error) {
+      return next(error);
+    }
+  }
 
-    return response.status(httpStatus).send({ messageFromDelete });
-  };
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const userData = UpdateUser.parse(req.body);
 
-  update = async (request: Request, response: Response) => {
-    const { id } = request.params;
-    const { firstName, lastName, age } = request.body;
+      const user = await userRepository.update(parseInt(id), userData);
 
-    const updatedValues = { firstName, lastName, age };
+      return res.status(200).json({
+        message: 'User updated',
+        data: user,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
 
-    const { httpStatus, messageFromUpdate } = await this.citi.updateValue(
-      id,
-      updatedValues
-    );
-
-    return response.status(httpStatus).send({ messageFromUpdate });
-  };
+  async delete(req: Request, res: Response, next: NextFunction) {
+      try {
+        const { id } = req.params;
+  
+        await userRepository.delete(parseInt(id));
+  
+        return res.status(200).json({
+          message: 'User deleted',
+        });
+      } catch (error) {
+        return next(error);
+      }
+    }
 }
 
 export default new UserController();
