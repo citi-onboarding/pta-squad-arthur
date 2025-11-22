@@ -1,4 +1,5 @@
 import LogoCITi from "./Logo.png";
+import ArrowBack from "./arrow_back.png";
 import LogoCITiPet from "./LogoCITiPet.svg";
 import MadeWithLove from "./MadeWithLove.svg";
 import Clock from "./Clock.svg";
@@ -13,15 +14,16 @@ import AlarmIcon from "./alarm.png";
 
 export {
   LogoCITi,
+  ArrowBack,
   LogoCITiPet,
   MadeWithLove,
   Clock,
   Sheep,
+  Cat,
+  Pig,
   Cow,
   Horse,
-  Pig,
   Dog,
-  Cat,
   CalendarIcon,
   AlarmIcon,
 };
