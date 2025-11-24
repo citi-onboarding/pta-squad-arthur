@@ -39,7 +39,6 @@ class PatientController {
       const patient = await patientRepository.findById(id);
       
       if (!patient) {
-        // Mensagem atualizada para "Paciente"
         return res.status(404).json({ message: "Paciente não encontrado" });
       }
 

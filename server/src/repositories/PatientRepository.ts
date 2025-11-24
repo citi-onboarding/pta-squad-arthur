@@ -4,7 +4,6 @@ import { Prisma } from "@prisma/client";
 // essa parte serve para isolar o BD (muito legal :)) 
 class PatientRepository {
   
-  // Agora usamos PatientUncheckedCreateInput
   async create(data: Prisma.PatientUncheckedCreateInput) {
     return await prisma.patient.create({ data });
   }
@@ -19,7 +18,6 @@ class PatientRepository {
     });
   }
 
-  // Agora usamos PatientUpdateInput
   async update(id: string, data: Prisma.PatientUpdateInput) {
     return await prisma.patient.update({
       where: { id },
