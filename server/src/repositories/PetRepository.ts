@@ -1,6 +1,7 @@
 import prisma from "@database";
 import { Prisma } from "@prisma/client";
 
+// essa parte serve para isolar o BD (muito legal :)) 
 class PetRepository {
   async create(data: Prisma.PetUncheckedCreateInput) {
     return await prisma.pet.create({ data });

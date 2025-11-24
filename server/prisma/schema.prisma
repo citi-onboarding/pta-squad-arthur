@@ -10,18 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int    @id @default(autoincrement())
-  firstName String
-  lastName  String
-  age       Int
+model Patient {
+  id          String   @id @default(uuid())
+  name        String
+  tutorName   String
+  age         Int
+  species     String
+  consultations Consultation[]
 }
 
-model Test {
-  id   Int    @id @default(autoincrement())
-  name String
-  age  Int
-}
 
 model Pet {
   id         String  @id @default(uuid())
@@ -29,4 +26,16 @@ model Pet {
   tutorName  String
   age        Int
   species    String
+}
+
+model Consultation {
+  id            String   @id @default(uuid())
+  doctorName    String
+  description   String
+  type          String
+  datetime      DateTime
+
+  patientId     String
+
+  patient       Patient  @relation(fields: [patientId], references: [id])
 }
