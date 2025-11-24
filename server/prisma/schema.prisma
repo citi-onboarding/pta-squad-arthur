@@ -22,3 +22,11 @@ model Test {
   name String
   age  Int
 }
+
+model Pet {
+  id         String  @id @default(uuid())
+  name       String
+  tutorName  String
+  age        Int
+  species    String
+}
