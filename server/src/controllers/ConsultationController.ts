@@ -5,18 +5,42 @@ import { ConsultationSchema, UpdateConsultationSchema } from '../DTOs/Consultaio
 
 class ConsultationController {
   
+  
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      // 1. Validação
-      const consultationdata = ConsultationSchema.parse(req.body);
       
-      // 2. Chamada ao Repo
-      const consultation = await consultationRepository.create(consultationdata);
+    const rawData = req.body; 
+    
+    
+    if(rawData.date && rawData.date.includes('/')){ 
+      const parts = rawData.date.split('/'); // [day, month, year]        
 
-      // 3. Resposta
-      return res.status(201).json({message: 'Consultation created.', data: consultation});
+      const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      rawData.date = isoDate;
+    }
+    
+    const combinedDateTime = `${rawData.date}T${rawData.time}:00`; 
+    
+    rawData.datetime = combinedDateTime;
+    
+    
+    delete rawData.date; 
+    delete rawData.time;
+    
+    const consultationdata = ConsultationSchema.parse(rawData);
+
+    if (consultationdata.datetime) {
+      consultationdata.datetime.setSeconds(0, 0); 
+    }
+    
+      
+    const consultation = await consultationRepository.create(consultationdata);
+
+      
+    return res.status(201).json({message: 'Consultation created.', data: consultation});
+
     } catch (error) {
-
+      
       if (error instanceof ZodError){
         return res.status(400).json({message: "Invalid request data.",
           details: error.issues.map(issue => ({
@@ -103,6 +127,7 @@ class ConsultationController {
     }
   }
 
+  //add
   async findByPatientId(req: Request, res: Response, next: NextFunction){
     try{
       const { patientId } = req.params;
@@ -120,7 +145,6 @@ class ConsultationController {
     } 
   }
 
-  //add
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
