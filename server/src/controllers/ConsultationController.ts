@@ -14,11 +14,11 @@ class ConsultationController {
       const consultation = await consultationRepository.create(consultationdata);
 
       // 3. Resposta
-      return res.status(201).json({message: 'Consultation created', data: consultation});
+      return res.status(201).json({message: 'Consultation created.', data: consultation});
     } catch (error) {
 
       if (error instanceof ZodError){
-        return res.status(400).json({message: "Invalid request data",
+        return res.status(400).json({message: "Invalid request data.",
           details: error.issues.map(issue => ({
             field: issue.path.join('.'),
             message: issue.message,
@@ -46,13 +46,11 @@ class ConsultationController {
   async findById(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      // TODO: Buscar pelo ID. 
-      // Se não encontrar (!result), retornar erro 404.
-      // Se encontrar, retornar 200.
+      
       const consultation = await consultationRepository.findById(id);
 
       if (!consultation){
-        return res.status(404).json({ message: "Consultation not found" });
+        return res.status(404).json({ message: "Consultation not found." });
       }
 
       return res.status(200).json(consultation);
@@ -62,6 +60,67 @@ class ConsultationController {
     }
   }
 
+  // add
+  async findByDoctor(req: Request, res: Response, next: NextFunction){
+    try{
+      const{ doctorName } = req.params;
+
+      const consultations = await consultationRepository.findByDoctor(doctorName)
+
+      if (consultations.length === 0){
+        return res.status(404).json({message: "No consultation from this doctor were found."})
+      }
+
+      return res.status(200).json(consultations)
+    } catch (error){
+      next(error)
+    }
+  }
+
+
+  //add
+  async findByDatetime(req: Request, res: Response, next: NextFunction){
+    try{
+
+      const { datetime_str } = req.params;
+      const datetime = new Date(datetime_str)
+
+      if (isNaN(datetime.getTime())){
+
+        return res.status(400).json({ error: "Invalid date format."})
+      }
+
+      const consultations = await consultationRepository.findByDatetime(datetime)
+
+      if (consultations.length === 0){
+        return res.status(404).json({ message: "Consulations not found on this period."})
+      }
+
+      return res.status(200).json(consultations)
+
+    }catch (error){
+      next(error)
+    }
+  }
+
+  async findByPatientId(req: Request, res: Response, next: NextFunction){
+    try{
+      const { patientId } = req.params;
+      const consultations = await consultationRepository.findByPatientId(patientId)
+
+      if(consultations.length === 0) {
+
+        return res.status(404).json({ message: "No consultations for this patient were found."})
+      }
+
+      return res.status(200).json({consultations})
+
+    }catch(error){
+      next(error)
+    } 
+  }
+
+  //add
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;

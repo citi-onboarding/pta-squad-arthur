@@ -9,7 +9,7 @@ class ConsultationRepository {
     
   }
 
-  async findAll(): Promise<Consultation[]> {
+  async findAll(): Promise< Array <Consultation>> {
     const consultations = await prisma.consultation.findMany();
     return consultations;
   }
@@ -27,13 +27,13 @@ class ConsultationRepository {
 
   // add findByDatetime
   // doubt
-  async findByDatetime(datetime: Date): Promise <Array<Consultation> | null> {
+  async findByDatetime(datetime: Date): Promise < Array <Consultation> > {
     const ConsultationByDateTime = await prisma.consultation.findMany({where: {datetime}})
     return ConsultationByDateTime;
   }
 
   // add findByPatientId
-  async findByPatientId(patientId: string): Promise<Array<Consultation> | null>{
+  async findByPatientId(patientId: string): Promise< Array <Consultation> >{
     const PatientConsultations = await prisma.consultation.findMany({where: {patientId}})
     return PatientConsultations;
   }
