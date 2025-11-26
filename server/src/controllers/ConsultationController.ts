@@ -16,9 +16,6 @@ class ConsultationController {
       const parts = rawData.date.split('/'); // [day, month, year]        
     
       if(parts.length === 3){
-        
-        if (parts[0].length === 1) { parts[0] = "0" + parts[0]; }
-        if(parts[1].length === 1){ parts[1] = "0" + parts[1]; }
 
         const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
         rawData.date = isoDate;
@@ -110,57 +107,7 @@ class ConsultationController {
   }
 
 
-  //add
-  async findByDateRange(req: Request, res: Response, next: NextFunction){
-    try{
-
-      const { dateString } = req.params; 
-      
-      let formattedDateString = dateString;
-    
-      if(dateString && dateString.includes('/')){
-
-        const parts = dateString.split('/'); // [day, month, year]        
-        
-        if (parts.length === 3){
-          
-          if(parts[0].length === 1){ parts[0] = "0" + parts[0];}
-
-          if(parts[1].length === 1){ parts[1] = "0" + parts[1];}
-
-          formattedDateString  = `${parts[2]}-${parts[1]}-${parts[0]}`;
-        
-        } else{
-
-          return res.status(400).json({ error: "Invalid date format. Expected DD/MM/AAAA"});
-          }
-        }
-
-        const startDate = new Date(formattedDateString);
-
-        if (isNaN(startDate.getTime())){
-
-        return res.status(400).json({ error: "Invalid date value or unrecognized format."});
-
-        }
-
-        const endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 1);
-
-        const consultations = await consultationRepository.findByDateRange(startDate, endDate);
-
-        if (consultations.length === 0) {
-
-        return res.status(404).json({ message: "Consultations not found on this day."});
-
-        }
-
-        return res.status(200).json(consultations);
-
-    }catch (error){
-      next(error)
-    }
-  }
+  
 
   //add
   async findByPatientId(req: Request, res: Response, next: NextFunction){
@@ -200,9 +147,9 @@ class ConsultationController {
      try {
       const { id } = req.params;
       // TODO: Chamar o delete do repositório
-      await consultationRepository.delete(id);
+      const consultaiondDeleted = await consultationRepository.delete(id);
       // TODO: Retornar status 204 (No Content) ou 200 com mensagem
-      return res.status(204).send();
+      return res.status(204).json(consultaiondDeleted);
     } catch (error) {
       next(error);
     }

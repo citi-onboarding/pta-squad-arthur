@@ -29,13 +29,6 @@ class ConsultationRepository {
     return consultations;
   }
 
-  // add findByDatetime
-  // doubt
-  async findByDateRange(startDate: Date, endDate: Date ): Promise < Array <Consultation> > {
-    const ConsultationByDateTime = await prisma.consultation.findMany()
-    return ConsultationByDateTime;
-  }
-
   //tested
   // add findByPatientId
   async findByPatientId(patientId: string): Promise< Array <Consultation> >{

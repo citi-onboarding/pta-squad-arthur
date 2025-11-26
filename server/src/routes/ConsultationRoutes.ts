@@ -9,9 +9,8 @@ ConsultationRouter.get("/", ConsultationController.findAll );
 ConsultationRouter.get("/:id", ConsultationController.findById );
 
 //add
-ConsultationRouter.get("/doctor/:doctorName", ConsultationController.findByDoctor)
-ConsultationRouter.get("/date/:dateTime", ConsultationController.findByDatetime)
-ConsultationRouter.get("/patient/:patientId", ConsultationController.findByPatientId)
+ConsultationRouter.get("/doctor/:doctorName", ConsultationController.findByDoctor);
+ConsultationRouter.get("/patient/:patientId", ConsultationController.findByPatientId);
 
 ConsultationRouter.delete("/:id", ConsultationController.delete);
 ConsultationRouter.patch("/:id", ConsultationController.update);
