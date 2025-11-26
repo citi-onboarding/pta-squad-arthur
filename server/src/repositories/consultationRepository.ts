@@ -14,9 +14,28 @@ class ConsultationRepository {
     return consultations;
   }
 
-  async findById(id: string): Promise<Consultation | null>{
+  async findById(id: string): Promise <Consultation | null>{
     const consultation = await prisma.consultation.findUnique({where: {id: id}}) ;
     return consultation;
+  }
+
+  // add finByDoctor
+  async findByDoctor(doctorName: string): Promise < Array <Consultation> >{
+    const consultations = await prisma.consultation.findMany({where: {doctorName: doctorName}})
+    return consultations;
+  }
+
+  // add findByDatetime
+  // doubt
+  async findByDatetime(datetime: Date): Promise <Array<Consultation> | null> {
+    const ConsultationByDateTime = await prisma.consultation.findMany({where: {datetime}})
+    return ConsultationByDateTime;
+  }
+
+  // add findByPatientId
+  async findByPatientId(patientId: string): Promise<Array<Consultation> | null>{
+    const PatientConsultations = await prisma.consultation.findMany({where: {patientId}})
+    return PatientConsultations;
   }
 
   async update(id: string, data: Prisma.ConsultationUpdateInput): Promise<Consultation> {

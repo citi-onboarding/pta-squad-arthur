@@ -5,7 +5,7 @@ export const ConsultationSchema = z.object({
   doctorName: z
   .string({error: "O nome deve ser uma string"})
   .nonempty({ message: "O nome é obrigatório, por favor informe-o."})
-  .regex(/^[a-zA-Z\s'áàãâéèêíìóòõôúùçÁÀÃÂÉÈÊÍÌÓÒÕÔÚÙÇ]+$/, {message: "O nome contém caracters inválidos"}),
+  .regex(/^[a-zA-Z\s'áàãâéèêíìóòõôúùçÁÀÃÂÉÈÊÍÌÓÒÕÔÚÙÇ.]+$/, {message: "O nome contém caracters inválidos"}),
 
   description: z
   .string({error: "A descrição deve ser uma string"})
