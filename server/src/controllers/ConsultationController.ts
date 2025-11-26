@@ -14,9 +14,17 @@ class ConsultationController {
     
     if(rawData.date && rawData.date.includes('/')){ 
       const parts = rawData.date.split('/'); // [day, month, year]        
+    
+      if(parts.length === 3){
+        
+        if (parts[0].length === 1) { parts[0] = "0" + parts[0]; }
+        if(parts[1].length === 1){ parts[1] = "0" + parts[1]; }
 
-      const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-      rawData.date = isoDate;
+        const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        rawData.date = isoDate;
+      }
+
+      
     }
     
     const combinedDateTime = `${rawData.date}T${rawData.time}:00`; 
@@ -103,24 +111,51 @@ class ConsultationController {
 
 
   //add
-  async findByDatetime(req: Request, res: Response, next: NextFunction){
+  async findByDateRange(req: Request, res: Response, next: NextFunction){
     try{
 
-      const { datetime_str } = req.params;
-      const datetime = new Date(datetime_str)
+      const { dateString } = req.params; 
+      
+      let formattedDateString = dateString;
+    
+      if(dateString && dateString.includes('/')){
 
-      if (isNaN(datetime.getTime())){
+        const parts = dateString.split('/'); // [day, month, year]        
+        
+        if (parts.length === 3){
+          
+          if(parts[0].length === 1){ parts[0] = "0" + parts[0];}
 
-        return res.status(400).json({ error: "Invalid date format."})
-      }
+          if(parts[1].length === 1){ parts[1] = "0" + parts[1];}
 
-      const consultations = await consultationRepository.findByDatetime(datetime)
+          formattedDateString  = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        
+        } else{
 
-      if (consultations.length === 0){
-        return res.status(404).json({ message: "Consulations not found on this period."})
-      }
+          return res.status(400).json({ error: "Invalid date format. Expected DD/MM/AAAA"});
+          }
+        }
 
-      return res.status(200).json(consultations)
+        const startDate = new Date(formattedDateString);
+
+        if (isNaN(startDate.getTime())){
+
+        return res.status(400).json({ error: "Invalid date value or unrecognized format."});
+
+        }
+
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 1);
+
+        const consultations = await consultationRepository.findByDateRange(startDate, endDate);
+
+        if (consultations.length === 0) {
+
+        return res.status(404).json({ message: "Consultations not found on this day."});
+
+        }
+
+        return res.status(200).json(consultations);
 
     }catch (error){
       next(error)

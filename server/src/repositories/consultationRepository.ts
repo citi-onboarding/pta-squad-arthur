@@ -31,8 +31,8 @@ class ConsultationRepository {
 
   // add findByDatetime
   // doubt
-  async findByDatetime(datetime: Date): Promise < Array <Consultation> > {
-    const ConsultationByDateTime = await prisma.consultation.findMany({where: {datetime}})
+  async findByDateRange(startDate: Date, endDate: Date ): Promise < Array <Consultation> > {
+    const ConsultationByDateTime = await prisma.consultation.findMany()
     return ConsultationByDateTime;
   }
 
