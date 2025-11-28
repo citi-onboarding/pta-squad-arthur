@@ -10,6 +10,7 @@ import Horse from "./Horse.svg";
 import Dog from "./DOG.png";
 import CalendarIcon from "./calendar.png";
 import AlarmIcon from "./alarm.png";
+import Plus from "./plus.svg";
 
 export {
   ArrowBack,
@@ -24,4 +25,5 @@ export {
   Dog,
   CalendarIcon,
   AlarmIcon,
+  Plus,
 };
