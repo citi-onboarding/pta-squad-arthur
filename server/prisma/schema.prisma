@@ -19,7 +19,6 @@ model Patient {
   consultations Consultation[]
 }
 
-
 model Consultation {
   id            String   @id @default(uuid())
   doctorName    String
