@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import UserRouter from './UserRoutes';
-
+import ConsultationRouter from './ConsultationRoutes';
+import PatientRouter from './PatientRoutes';
 
 const router = Router();
 
 // Add new routes here
 router.use('/user', UserRouter);
-
+router.use('/consultation', ConsultationRouter)
+router.use('/patient', PatientRouter); 
 
 // Default route
 router.route('/').get((_, res) => {

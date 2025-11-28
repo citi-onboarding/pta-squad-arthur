@@ -30,7 +30,7 @@ const mockAppointments = [
   },
   {
     id: 3,
-    date: "27/11",
+    date: "29/11",
     time: "11:15",
     petName: "Spirit",
     ownerName: "Carlos",
@@ -40,7 +40,7 @@ const mockAppointments = [
   },
   {
     id: 4,
-    date: "28/11",
+    date: "29/11",
     time: "01:51",
     petName: "Babe",
     ownerName: "Julia",
@@ -50,7 +50,7 @@ const mockAppointments = [
   },
   {
     id: 5,
-    date: "26/11",
+    date: "31/11",
     time: "11:30",
     petName: "Claudio",
     ownerName: "Lucas",
@@ -86,6 +86,7 @@ export default function Home() {
     const [searchTerm, setSearchTerm] = useState('');
     const [date, setDate] = useState<Date | undefined>(undefined);
     const handleReset = () => setSearchTerm('');
+    const handleClearDate = () => setDate(undefined);
     const selectedDateString = date
     ? `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`
     : null;
@@ -102,17 +103,14 @@ return (
 
                 <div className="flex gap-6">
                     <Input
-                        className="w-96 h-12"
+                        className="w-96 h-12 px-4"
                         value={searchTerm} 
                         onChange={(e) => setSearchTerm(e.target.value)} 
-                        placeholder=" Pesquise aqui..."
+                        placeholder="Pesquise aqui..."
                     />
-
-                    {searchTerm ? (
-                        <Button onClick={handleReset} className="w-32 h-12 rounded-full bg-[#7D1AD7]">Limpar</Button>
-                    ) : (
-                        <Button className="w-32 h-12 rounded-full bg-[#7D1AD7]">Buscar</Button>
-                    )}
+                    <Button onClick={handleReset} className="w-32 h-12 rounded-full bg-[#7D1AD7]">
+                        Limpar
+                    </Button>
                 </div>
                 <div className="w-full flex justify-between items-end">
                     <div className="bg-gray-100 p-3 rounded-xl shadow-sm inline-flex gap-4">
@@ -138,13 +136,18 @@ return (
                             Histórico
                         </button>
                     </div>
-                    <div className="w-full flex justify-end">
-                        <Calendar22 {...({ selectedDate: date, onDateChange: setDate } as any)} />
+                    <div className="w-full flex gap-4 justify-end">
+                        <div>
+                            <Calendar22 {...({ selectedDate: date, onDateChange: setDate } as any)} />
+                        </div>
+                    <Button onClick={handleClearDate} className="w-24 h-12 rounded-full bg-[#7D1AD7]">
+                        Limpar Data
+                    </Button>
                     </div>
-                 </div>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                 {mockAppointments.filter(app => {
                     const [day, month] = app.date.split('/').map(Number);
                     const [hours, minutes] = app.time.split(':').map(Number);
