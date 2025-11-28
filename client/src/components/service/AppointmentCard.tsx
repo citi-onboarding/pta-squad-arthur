@@ -62,7 +62,7 @@ let baseContainerColor
 
   return (
     // CONTAINER PRINCIPAL - corrigiDO a parte de px para rem para deixar mais reponsivo
-    <div className={`flex items-center w-full max-w-[26rem] min-w-[240px] h-[8.5rem] rounded-[1rem] px-[1.5rem] py-[1rem] ${containerColor}`}>   
+    <div className={`flex items-center w-[26rem] max-w-[31rem] h-[8.5rem] rounded-[1rem] px-[1.5rem] py-[1rem] ${containerColor}`}>   
       
       {/* 1. Bloco Esquerdo: Ícone, Data e Hora (Flex Column) */}
       <div className="flex flex-col items-center pt-[0.8rem] pr-[0.4rem] pb-[0.8rem] pl-[0.4rem] gap-[0.1rem] bg-[#FFFFFF] bg-opacity-80 rounded-[0.3rem]"> 
