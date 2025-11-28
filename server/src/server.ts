@@ -12,6 +12,8 @@ app.use(routes);
 app.use(express.static(__dirname + "/public"));
 app.use(errorHandler);
 
-app.listen(process.env.SERVER_PORT || 3001, () => {
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3001;
+
+app.listen(Number(PORT), '0.0.0.0', () => {
   console.log("📦 Server running");
 });
