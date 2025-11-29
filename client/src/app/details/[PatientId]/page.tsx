@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Sheep, Cat, Pig, Cow, Horse, Dog, SimpleArrowBack, } from "@/assets"
 import Image from 'next/image';
 import { NovaConsultaModal } from '@/components/details/NovaConsultaModal';
+import { HistoryCard } from "@/components/details/HistoryCard";
 
 
 const SPECIES_MAP: Record<string, string> = {
@@ -16,6 +17,32 @@ const SPECIES_MAP: Record<string, string> = {
     "HORSE": Horse.src,
 };
 
+const formatDateTime = (dateTimeString: string) => {
+    // Exemplo: "2025-01-10T16:30Z"
+    const parts = dateTimeString.split('T');
+
+    // partes[0] = "2025-01-10"
+    let Rawdate = parts[0];
+    let ArrayDate = Rawdate.split('-')
+    let date;
+
+    if (ArrayDate[0] != "2025") { date = ArrayDate[2] + "/" + ArrayDate[1] + "/" + ArrayDate[0] }
+    else { date = ArrayDate[2] + "/" + ArrayDate[1] }
+
+    // partes[1] = "16:30Z" -> remove o 'Z'
+    let time = parts[1].replace('Z', '');
+    if (time.length == 8) { time = time.slice(0, 5) }
+
+
+    return { date, time };
+};
+
+interface Consultation {
+    doctorName: string;
+    description: string;
+    type: string;
+    dateTime: string;
+}
 
 export default function Details() {
 
@@ -26,7 +53,7 @@ export default function Details() {
     const idPatient = params.PatientId;
 
     const [patient, setPatient] = useState<any>(null);
-    const [consultation, setConsultation] = useState<any>(null);
+    const [consultation, setConsultation] = useState<Consultation[] | null>(null);
 
     useEffect(() => {
 
@@ -91,6 +118,11 @@ export default function Details() {
 
     }
 
+
+
+
+
+
     let backGroundColor
 
     switch (consultation[0].type) {
@@ -114,49 +146,79 @@ export default function Details() {
 
     return (
 
-        <main className="min-h-screen bg-white py-12 px-10 md:px-8 font-sans">
+        <main className="min-h-screen bg-white py-12 px-4 md:px-8">
 
-            <div className="flex flex-col px-16 sm:px-20 md:px-24 lg:px-32">
+            <div className="px-[7.85rem] sm:px-[8.5rem] md:px-[9.5rem] lg:px-[7rem]">
 
                 <Link href="#" className="flex items-baseline">
                     <Image src={SimpleArrowBack} alt="Botão para voltar para a página anterior" className="mr-[2rem] h-[0.9rem] sm:h-[1rem] md:h-[1.3rem] lg:h-[1.5rem]" />
                     <h1 className="[word-spacing:1rem] text-2xl md:text-3xl lg:text-4xl font-bold">Detalhes da Consulta </h1>
                 </Link>
 
-                <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Paciente</p>
+                <div className="flex justify-between gap-x-12">
 
-                <div className="flex">
-                    <Image src={PetImage} alt="Foto Representando a Espécie do Animal" width={230} height={240} />
-                    <div className="ml-[2.25rem] h-[235px] flex flex-col justify-between">
+                    <div className="">
 
-                        <div className="mt-10">
-                            <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">{patient?.name}</p>
-                            <p className="text-base sm:text-lg md:text-xl lg:text-2xl">{patient.age} Anos</p>
+                        <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Paciente</p>
+
+                        <div className="flex">
+                            <Image src={PetImage} alt="Foto Representando a Espécie do Animal" width={230} height={240} />
+
+                            <div className="ml-[2.25rem] h-[235px] flex flex-col justify-between">
+
+                                <div className="mt-10">
+                                    <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">{patient?.name}</p>
+                                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl">{patient.age} Anos</p>
+                                </div>
+
+                                <div>
+                                    <p className="text-base sm:text-lg md:text-lg lg:text-lg">{patient.tutorName}</p>
+                                    <p className="text-base sm:text-lg md:text-lg lg:text-lg">{consultation[0].doctorName}</p>
+                                </div>
+
+                            </div>
                         </div>
 
-                        <div>
-                            <p className="text-base sm:text-lg md:text-lg lg:text-lg">{patient.tutorName}</p>
-                            <p className="text-base sm:text-lg md:text-lg lg:text-lg">{consultation[0].doctorName}</p>
+                        <div className="mt-[65px] max-w-[631px]">
+                            <p className="font-bold text-base md:text-lg">Descrição do problema:</p>
+                            <p className="text-base">{consultation[0].description}</p>
+                        </div>
+
+                        <div className="flex mt-[24px] w-[15.5625rem] justify-between h-[30px] items-center">
+                            <p className="text-base font-bold">Tipo de Consulta:</p>
+                            <div>
+                            <p className={`${backGroundColor} lg:w-[6.3125rem] h-full rounded-sm flex justify-center items-center p-1.5`}>{consultation[0].type}</p>
+                            </div>
+                        </div>
+
+                        <div className="mt-[40px] flex flex-col max-w-[39.4375rem] h-[8.625rem] items-center justify-center shadow rounded-3xl border-[1px] gap-6 p-6">
+                            <p className="font-bold text-base mt-[12px]">Deseja Realizar Outra Consulta?</p>
+                            <NovaConsultaModal />
                         </div>
 
                     </div>
-                </div>
 
-                <div className="mt-[65px] max-w-[631px]">
-                    <p className="font-bold text-base md:text-lg">Descrição do problema:</p>
-                    <p className="text-base">{consultation[0].description}</p>
-                </div>
+                    <div className="h-[31.625rem] lg:pl-[5rem] ">
+                        <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl ">Histórico de Consulta</p>
+                        <div className="rounded-3xl shadow lg:h-[31.625rem] w-[20rem] sm:w-[28rem] md:w-[30rem] lg:w-[33rem] overflow-auto gap-8 px-6 py-4 flex flex-col justify-between border-1">
+                            {consultation.map((consult, index) => {
 
-                <div className="flex mt-[24px] w-[15.5625rem] justify-between h-[30px] items-center">
-                    <p className="text-base font-bold">Tipo de Consulta:</p>
-                    <p className={`${backGroundColor} p-1.5`}>{consultation[0].type}</p>
-                </div>
+                                const { date, time } = formatDateTime(consult.dateTime);
 
-                <div className="mt-[40px] flex flex-col max-w-[39.4375rem] h-[8.625rem] items-center justify-center shadow rounded-3xl border-[1px] gap-6 p-6">
-                    <p className="font-bold text-base mt-[12px]">Deseja Realizar Outra Consulta?</p>
-                    <NovaConsultaModal />
+                                return (
+                                    <HistoryCard
+                                        key={index} // Chave única
+                                        doctorName={consult.doctorName}
+                                        type={consult.type}
+                                        // 2. Passa os valores formatados
+                                        date={date}
+                                        time={time}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </main>
     )

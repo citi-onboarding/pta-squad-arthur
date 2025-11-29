@@ -14,11 +14,11 @@ interface HistoryCardProps {
 // Componente HistoryCard without onClick implementation on the arrowback image and without the conection with the backend data
 export const HistoryCard: React.FC<HistoryCardProps> = ({ date, time, type, doctorName, onClick }) => {
   return (
-    <div className="flex items-center justify-between w-full h-16 p-6 bg-gray-100 rounded-xl shadow-md ">
+    <div className="flex items-center justify-between w-full h-[3.25rem] md:h-[4rem] lg:h-[5.125rem] py-4 px-6 bg-gray-100 rounded-2xl shadow-md ">
 
-      <div className="flex flex-col items-center justify-center border-r p-2 bg-white rounded-xl h-auto">
-        <p className="font-bold text-xs">{date}</p>
-        <p className="font-bold text-xs">{time}</p>
+      <div className="flex flex-col items-center justify-center border-r p-1.5 gap-2 bg-white rounded-xl">
+        <p className="font-bold text-sm">{date}</p>
+        <p className="font-bold text-sm">{time}</p>
       </div>
 
       <div className="flex-grow flex justify-start mx-4 min-w-0 p-6">
@@ -26,7 +26,7 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ date, time, type, doct
       </div>
 
       <div className="flex items-center space-x-4 pr-10 pl-6">
-        <p className="text-sem whitespace-nowrap text-sm">{doctorName}</p>
+        <p className="whitespace-nowrap text-sm">{doctorName}</p>
       </div>
 
       <div className="flex items-center pl-4 flex-shrink-0">
