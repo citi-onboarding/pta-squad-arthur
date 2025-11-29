@@ -2,8 +2,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Sheep, Cat, Pig, Cow, Horse, Dog, } from "@/assets"
+import { Sheep, Cat, Pig, Cow, Horse, Dog, SimpleArrowBack, } from "@/assets"
 import Image from 'next/image';
+import { NovaConsultaModal } from '@/components/details/NovaConsultaModal';
 
 
 const SPECIES_MAP: Record<string, string> = {
@@ -18,21 +19,21 @@ const SPECIES_MAP: Record<string, string> = {
 
 export default function Details() {
 
-    
+
     const params = useParams();
 
     // equal to the folder's name
     const idPatient = params.PatientId;
 
-    const [patient, setPatient] = useState <any>(null);
-    const [consultation, setConsultation] = useState <any>(null);
+    const [patient, setPatient] = useState<any>(null);
+    const [consultation, setConsultation] = useState<any>(null);
 
     useEffect(() => {
 
         // simulação para ver se o id chegou
         console.log("ID capturado da URL:", idPatient)
 
-        if(idPatient){
+        if (idPatient) {
 
             setPatient(
 
@@ -46,65 +47,114 @@ export default function Details() {
             )
 
             setConsultation(
-            [
-                {     
-                    doctorName: "Dr. Guilherme",
-                    description: "Paciente Rex, cinco ano, compareceu para protocolo de imunização. Exame clínico rápido (peso, TPC, mucosas) dentro da normalidade, paciente ativo e responsivo. Administrada a vacina de Raiva por via subcutânea. Tutora orientada sobre possíveis reações leves (febre baixa, inchaço local) nas próximas 24 horas. Próxima dose de reforço agendada para duas semanas.",
-                    type: "Vacinção",
-                    dateTime: "2025-11-27T18:49Z",
-                },
+                [
+                    {
+                        doctorName: "Dr. Guilherme",
+                        description: "Paciente Rex, onze anos, compareceu para protocolo de imunização. Exame clínico rápido (peso, TPC, mucosas) dentro da normalidade, paciente ativo e responsivo. Administrada a vacina de Raiva por via subcutânea. Tutora orientada sobre possíveis reações leves (febre baixa, inchaço local) nas próximas 24 horas. Próxima dose de reforço agendada para duas semanas.",
+                        type: "Vacinação",
+                        dateTime: "2025-11-27T18:49Z",
+                    },
 
-                {
-                    doctorName: "Dr. Gustavo Leão",
-                    description: "Consulta de rotina anual em paciente Rex, cinco anos. Exame físico revelou: gengivite de grau 2, discreta opacidade no cristalino (início de catarata senil), peso estável. Ausculta cardíaca e pulmonar normais. Discutida a importância da higiene bucal diária e agendamento de um destartarização. Solicitados Exames Laboratoriais (Hemograma completo, Bioquímica e Urinálise) para avaliação metabólica e rastreio de doenças crônicas. Plano de exercícios recomendado devido à idade.",
-                    type: "Retorno",
-                    dateTime: "2024-03-15T10:30Z",
-                },
+                    {
+                        doctorName: "Dr. Gustavo Leão",
+                        description: "Consulta de rotina anual em paciente Rex, cinco anos. Exame físico revelou: gengivite de grau 2, discreta opacidade no cristalino (início de catarata senil), peso estável. Ausculta cardíaca e pulmonar normais. Discutida a importância da higiene bucal diária e agendamento de um destartarização. Solicitados Exames Laboratoriais (Hemograma completo, Bioquímica e Urinálise) para avaliação metabólica e rastreio de doenças crônicas. Plano de exercícios recomendado devido à idade.",
+                        type: "Retorno",
+                        dateTime: "2024-03-15T10:30Z",
+                    },
 
-                {
-                    doctorName: "Dra. Ana Paula Lima",
-                    description: "Paciente Rex, cinco anos. Check-up completo semestral. Exame físico geral sem alterações, peso mantido. Discutida a necessidade de aumentar a frequência de passeios e ajustar a porção de ração, visto que está perto da classificação de sobrepeso. Foi realizada limpeza de ouvidos e corte de unhas. Tutora orientada a reavaliar a dieta e marcar a destartarização em 3 meses. Próximo check-up recomendado em seis meses.",
-                    type: "Check-up",
-                    dateTime: "2025-07-20T11:00Z"
-                },
+                    {
+                        doctorName: "Dra. Ana Paula Lima",
+                        description: "Paciente Rex, cinco anos. Check-up completo semestral. Exame físico geral sem alterações, peso mantido. Discutida a necessidade de aumentar a frequência de passeios e ajustar a porção de ração, visto que está perto da classificação de sobrepeso. Foi realizada limpeza de ouvidos e corte de unhas. Tutora orientada a reavaliar a dieta e marcar a destartarização em 3 meses. Próximo check-up recomendado em seis meses.",
+                        type: "Check-up",
+                        dateTime: "2025-07-20T11:00Z"
+                    },
 
-                {
-                    doctorName: "Dr. Guilherme",
-                    description: "Primeira consulta do paciente Rex na clínica. Paciente de cinco anos, resgatado há 2 semanas. Histórico vago. Apresenta alopecia em flanco esquerdo. Condição corporal 3/5 (magro), mas ativo. Solicitada raspagem de pele e tricograma para descartar sarna ou fungos. Prescrito suplemento vitamínico e orientações de manejo alimentar. Agendado retorno em uma semana para reavaliação dos exames e início de tratamento específico. Necessidade de protocolo vacinal e vermifugação levantada.",
-                    type: "Primeira Consulta",
-                    dateTime: "2025-01-10T16:30Z"
-                }
-            ]
+                    {
+                        doctorName: "Dr. Guilherme",
+                        description: "Primeira consulta do paciente Rex na clínica. Paciente de cinco anos, resgatado há 2 semanas. Histórico vago. Apresenta alopecia em flanco esquerdo. Condição corporal 3/5 (magro), mas ativo. Solicitada raspagem de pele e tricograma para descartar sarna ou fungos. Prescrito suplemento vitamínico e orientações de manejo alimentar. Agendado retorno em uma semana para reavaliação dos exames e início de tratamento específico. Necessidade de protocolo vacinal e vermifugação levantada.",
+                        type: "Primeira Consulta",
+                        dateTime: "2025-01-10T16:30Z"
+                    }
+                ]
             )
         }
     }, [idPatient])
 
-    if (!consultation || !patient ){
-        
-        return(
+    if (!consultation || !patient) {
 
-                <div>
-                    Carregando ID: {idPatient}...
-                </div>
-    )
+        return (
 
-}
+            <div>
+                Carregando ID: {idPatient}...
+            </div>
+        )
 
-    const PetImage = patient?. species ? SPECIES_MAP[patient.species] : Cat.src
+    }
+
+    let backGroundColor
+
+    switch (consultation[0].type) {
+        case 'Primeira Consulta':
+            backGroundColor = 'bg-[#BFB5FF]'
+            break
+        case 'Vacinação':
+            backGroundColor = 'bg-[#AAE1FF]'
+            break
+        case 'Check-up':
+            backGroundColor = 'bg-[#9CFF95]'
+            break
+        case 'Retorno':
+        default:
+            backGroundColor = 'bg-[#FF641999]'
+            break
+    }
+
+    const PetImage = patient?.species ? SPECIES_MAP[patient.species] : Cat.src
 
 
     return (
 
         <main className="min-h-screen bg-white py-12 px-10 md:px-8 font-sans">
-            <div className="flex flex-col px-16 sm:px-20 md:px-24 lg:px-32 ">
 
-                <Link href="#" className="text-2xl md:text-3xl lg:text-4xl font-bold"> &lt; Detalhes da Consulta </Link>
+            <div className="flex flex-col px-16 sm:px-20 md:px-24 lg:px-32">
 
-                <p className="py-7 font-bold text-base md:text-lg lg:text-xl">Paciente</p>
+                <Link href="#" className="flex items-baseline">
+                    <Image src={SimpleArrowBack} alt="Botão para voltar para a página anterior" className="mr-[2rem] h-[0.9rem] sm:h-[1rem] md:h-[1.3rem] lg:h-[1.5rem]" />
+                    <h1 className="[word-spacing:1rem] text-2xl md:text-3xl lg:text-4xl font-bold">Detalhes da Consulta </h1>
+                </Link>
+
+                <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Paciente</p>
 
                 <div className="flex">
-                    <Image src={PetImage} alt="Foto Representando a Espécie do Animal" width={224}height={224}/>
-                    <p>{patient?.name}</p>
+                    <Image src={PetImage} alt="Foto Representando a Espécie do Animal" width={230} height={240} />
+                    <div className="ml-[2.25rem] h-[235px] flex flex-col justify-between">
+
+                        <div className="mt-10">
+                            <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">{patient?.name}</p>
+                            <p className="text-base sm:text-lg md:text-xl lg:text-2xl">{patient.age} Anos</p>
+                        </div>
+
+                        <div>
+                            <p className="text-base sm:text-lg md:text-lg lg:text-lg">{patient.tutorName}</p>
+                            <p className="text-base sm:text-lg md:text-lg lg:text-lg">{consultation[0].doctorName}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className="mt-[65px] max-w-[631px]">
+                    <p className="font-bold text-base md:text-lg">Descrição do problema:</p>
+                    <p className="text-base">{consultation[0].description}</p>
+                </div>
+
+                <div className="flex mt-[24px] w-[15.5625rem] justify-between h-[30px] items-center">
+                    <p className="text-base font-bold">Tipo de Consulta:</p>
+                    <p className={`${backGroundColor} p-1.5`}>{consultation[0].type}</p>
+                </div>
+
+                <div className="mt-[40px] flex flex-col max-w-[39.4375rem] h-[8.625rem] items-center justify-center shadow rounded-3xl border-[1px] gap-6 p-6">
+                    <p className="font-bold text-base mt-[12px]">Deseja Realizar Outra Consulta?</p>
+                    <NovaConsultaModal />
                 </div>
 
             </div>
