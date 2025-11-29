@@ -17,6 +17,7 @@ const SPECIES_MAP: Record<string, string> = {
     "HORSE": Horse.src,
 };
 
+//function to handle dateTime data coming in the international format
 const formatDateTime = (dateTimeString: string) => {
     // Exemplo: "2025-01-10T16:30Z"
     const parts = dateTimeString.split('T');
@@ -111,16 +112,15 @@ export default function Details() {
 
         return (
 
-            <div>
-                Carregando ID: {idPatient}...
-            </div>
+            <main className="min-h-screen max:w-full flex justify-center py-10 bg-slate-50">
+                <div className="bg-[#70DB93] flex justify-center items-center w-[50rem] h-[25rem] mt-[5rem] rounded-xl">
+                    <p className="text-white font-bold text-lg md:text-xl lg:text-2xl">Carregando os detalhes da consulta do paciente, aguarde.</p>
+                </div>
+            </main>
+
         )
 
     }
-
-
-
-
 
 
     let backGroundColor
@@ -146,7 +146,7 @@ export default function Details() {
 
     return (
 
-        <main className="min-h-screen bg-white py-12 px-4 md:px-8">
+        <main className="min-h-screen bg-white py-6 px-4 md:px-8">
 
             <div className="px-[7.85rem] sm:px-[8.5rem] md:px-[9.5rem] lg:px-[7rem]">
 
@@ -187,7 +187,7 @@ export default function Details() {
                         <div className="flex mt-[24px] w-[15.5625rem] justify-between h-[30px] items-center">
                             <p className="text-base font-bold">Tipo de Consulta:</p>
                             <div>
-                            <p className={`${backGroundColor} lg:w-[6.3125rem] h-full rounded-sm flex justify-center items-center p-1.5`}>{consultation[0].type}</p>
+                                <p className={`${backGroundColor} lg:w-[6.3125rem] h-full rounded-sm flex justify-center items-center p-1.5`}>{consultation[0].type}</p>
                             </div>
                         </div>
 
@@ -200,17 +200,17 @@ export default function Details() {
 
                     <div className="h-[31.625rem] lg:pl-[5rem] ">
                         <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl ">Histórico de Consulta</p>
-                        <div className="rounded-3xl shadow lg:h-[31.625rem] w-[20rem] sm:w-[28rem] md:w-[30rem] lg:w-[33rem] overflow-auto gap-8 px-6 py-4 flex flex-col justify-between border-1">
+                        <div className="rounded-3xl shadow h-[26rem] lg:h-[28rem] w-[20rem] sm:w-[28rem] md:w-[30rem] lg:w-[33rem] overflow-auto  px-6 py-4 flex dap-1 md:gap-1.5 lg:gap-2 flex-col justify-between border-1">
                             {consultation.map((consult, index) => {
-
+                                // This function is to render the other consultations in the HistoryCard
                                 const { date, time } = formatDateTime(consult.dateTime);
 
                                 return (
                                     <HistoryCard
-                                        key={index} // Chave única
+                                        key={index}
                                         doctorName={consult.doctorName}
                                         type={consult.type}
-                                        // 2. Passa os valores formatados
+
                                         date={date}
                                         time={time}
                                     />
