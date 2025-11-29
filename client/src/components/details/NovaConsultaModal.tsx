@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LogoCITiPet, CalendarIcon, AlarmIcon } from "@/assets";
+import { CircleCheckBig } from "lucide-react";
 
 export function NovaConsultaModal() {
   const [medico, setMedico] = useState('');
@@ -50,7 +51,18 @@ export function NovaConsultaModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Nova Consulta</Button>
+        <Button variant="outline" className="
+                                    bg-[#70DB93]
+                                    hover:bg-green-500 hover:text-white
+                                    h-[8.625rem]
+                                    w-[16rem] sm:w-[24rem] md:w-[30rem] lg:w-[36rem] 
+                                    rounded-3xl 
+                                    text-white
+                                     shadow
+                                     mx-[2rem]
+                                     mb-[12px]">
+          <CircleCheckBig />
+          Agendamento</Button>
       </DialogTrigger>
 
       <DialogContent
@@ -66,7 +78,7 @@ export function NovaConsultaModal() {
             flex-col            
             gap-7   
           "
-        >
+      >
 
 
         {/* Logo. DialogHeader serve para acessibilidade */}
@@ -74,14 +86,14 @@ export function NovaConsultaModal() {
           <Image src={LogoCITiPet} width={189} height={74} alt="Citi Logo" />
         </div>
         <DialogHeader className="flex justify-center">
-        <DialogTitle className="text-center text-lg font-normal leading-tight">
-          <span className="font-semibold">
-            O pet já está cadastrado no sistema!
-          </span>{" "}
-          Preencha os dados da{" "}
-          <span className="font-semibold">consulta</span>
-        </DialogTitle>
-      </DialogHeader>
+          <DialogTitle className="text-center text-lg font-normal leading-tight">
+            <span className="font-semibold">
+              O pet já está cadastrado no sistema!
+            </span>{" "}
+            Preencha os dados da{" "}
+            <span className="font-semibold">consulta</span>
+          </DialogTitle>
+        </DialogHeader>
 
 
         <form onSubmit={Submit} className="mt-4">
@@ -138,34 +150,34 @@ export function NovaConsultaModal() {
             esconder o símbolo padrão do navegador*/}
             <div className="flex flex-col space-y-1">
               <Label className="text-base font-bold  text-black leading-[110%] ">
-                    Data do atendimento
+                Data do atendimento
               </Label>
               <div className="relative">
                 <Input
-                type="date"
-                value={dataAtendimento}
-                onChange={(e) => setDataAtendimento(e.target.value)}
-                required
-                className="
+                  type="date"
+                  value={dataAtendimento}
+                  onChange={(e) => setDataAtendimento(e.target.value)}
+                  required
+                  className="
                   w-full h-12 rounded-[8px] border-[1px] border-[#101010] p-4 text-base placeholder:text-gray-400
                  [&::-webkit-calendar-picker-indicator]:hidden"
-              />
-              <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
-                  <Image 
-                    src={CalendarIcon} 
-                    width={20} 
-                    height={20} 
-                    alt="Calendário" 
+                />
+                <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
+                  <Image
+                    src={CalendarIcon}
+                    width={20}
+                    height={20}
+                    alt="Calendário"
                   />
                 </span>
-            </div>
               </div>
-              
+            </div>
+
 
             {/* Horário. Basicamente a mesma coisa da data*/}
             <div className="flex flex-col space-y-1">
               <Label className="text-base font-bold  text-black leading-[110%] ">
-                    Horário do atendimento
+                Horário do atendimento
               </Label>
               <div className="relative">
                 <Input
@@ -179,19 +191,19 @@ export function NovaConsultaModal() {
                 />
                 <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
                   {/* Ícone manual */}
-                  <Image 
-                    src={AlarmIcon} 
-                    width={20} 
-                    height={20} 
-                    alt="Relógio" 
+                  <Image
+                    src={AlarmIcon}
+                    width={20}
+                    height={20}
+                    alt="Relógio"
                   />
                 </span>
               </div>
             </div>
           </div>
-            <Button
-              type="submit"
-              className="
+          <Button
+            type="submit"
+            className="
                 w-full   
                 h-auto         
                 px-[32px]      
@@ -205,9 +217,9 @@ export function NovaConsultaModal() {
                 text-md font-medium   
                 mt-6                 
               "
-            >
-              Finalizar cadastro
-            </Button>
+          >
+            Finalizar cadastro
+          </Button>
 
         </form>
       </DialogContent>
