@@ -150,7 +150,7 @@ export default function Details() {
 
             <div className="px-[7.85rem] sm:px-[8.5rem] md:px-[9.5rem] lg:px-[7rem]">
 
-                <Link href="#" className="flex items-baseline">
+                <Link href="/" className="flex items-baseline">
                     <Image src={SimpleArrowBack} alt="Botão para voltar para a página anterior" className="mr-[2rem] h-[0.9rem] sm:h-[1rem] md:h-[1.3rem] lg:h-[1.5rem]" />
                     <h1 className="[word-spacing:1rem] text-2xl md:text-3xl lg:text-4xl font-bold">Detalhes da Consulta </h1>
                 </Link>
