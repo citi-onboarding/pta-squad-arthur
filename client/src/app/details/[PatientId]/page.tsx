@@ -147,10 +147,10 @@ export default function Details() {
     return (
 
         <main className="min-h-screen bg-white py-6 px-4 md:px-8">
+ 
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 max-w-6xl">
 
-            <div className="px-[7.85rem] sm:px-[8.5rem] md:px-[9.5rem] lg:px-[7rem]">
-
-                <Link href="/" className="flex items-baseline">
+                <Link href="/" className="flex items-baseline w-full">
                     <Image src={SimpleArrowBack} alt="Botão para voltar para a página anterior" className="mr-[2rem] h-[0.9rem] sm:h-[1rem] md:h-[1.3rem] lg:h-[1.5rem]" />
                     <h1 className="[word-spacing:1rem] text-2xl md:text-3xl lg:text-4xl font-bold">Detalhes da Consulta </h1>
                 </Link>
@@ -162,9 +162,9 @@ export default function Details() {
                         <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">Paciente</p>
 
                         <div className="flex">
-                            <Image src={PetImage} alt="Foto Representando a Espécie do Animal" width={230} height={240} />
+                            <Image src={PetImage} alt="Foto Representando a Espécie do Animal" width={0} height={0} className="w-48 h-auto lg:w-56" />
 
-                            <div className="ml-[2.25rem] h-[235px] flex flex-col justify-between">
+                            <div className="ml-4 md:ml-6 h-56 flex flex-col justify-between">
 
                                 <div className="mt-10">
                                     <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">{patient?.name}</p>
@@ -179,28 +179,28 @@ export default function Details() {
                             </div>
                         </div>
 
-                        <div className="mt-[65px] max-w-[631px]">
+                        <div className="mt-12 max-w-xl">
                             <p className="font-bold text-base md:text-lg">Descrição do problema:</p>
                             <p className="text-base">{consultation[0].description}</p>
                         </div>
 
-                        <div className="flex mt-[24px] w-[15.5625rem] justify-between h-[30px] items-center">
-                            <p className="text-base font-bold">Tipo de Consulta:</p>
+                        <div className="flex mt-6 justify-start h-8 items-center">
+                            <p className="text-base font-bold mr-10">Tipo de Consulta:</p>
                             <div>
-                                <p className={`${backGroundColor} lg:w-[6.3125rem] h-full rounded-sm flex justify-center items-center p-1.5`}>{consultation[0].type}</p>
+                                <p className={`${backGroundColor} lg:w-28 h-full rounded-sm flex justify-center items-center p-1.5`}>{consultation[0].type}</p>
                             </div>
                         </div>
 
-                        <div className="mt-[40px] flex flex-col max-w-[39.4375rem] h-[8.625rem] items-center justify-center shadow rounded-3xl border-[1px] gap-6 p-6">
-                            <p className="font-bold text-base mt-[12px]">Deseja Realizar Outra Consulta?</p>
+                        <div className="mt-10 flex flex-col max-w-xl h-40 items-center justify-center shadow rounded-3xl border-[1px] gap-6 p-6">
+                            <p className="font-bold text-base mt-3">Deseja Realizar Outra Consulta?</p>
                             <NovaConsultaModal />
                         </div>
 
                     </div>
 
-                    <div className="h-[31.625rem] lg:pl-[5rem] ">
+                    <div className="h-full lg:pl-10 ">
                         <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl ">Histórico de Consulta</p>
-                        <div className="rounded-3xl shadow h-[26rem] lg:h-[28rem] w-[20rem] sm:w-[28rem] md:w-[30rem] lg:w-[33rem] overflow-auto  px-6 py-4 flex dap-1 md:gap-1.5 lg:gap-2 flex-col justify-between border-1">
+                        <div className="rounded-3xl shadow h-96 lg:h-[28rem] w-full  md:w-96 lg:w-[33rem] overflow-auto  px-6 py-4 flex dap-1 md:gap-1.5 lg:gap-2 flex-col justify-between border-1">
                             {consultation.map((consult, index) => {
                                 // This function is to render the other consultations in the HistoryCard
                                 const { date, time } = formatDateTime(consult.dateTime);
