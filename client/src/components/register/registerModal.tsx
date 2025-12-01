@@ -12,20 +12,23 @@ import {
     DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+interface RegistrationModalProps {
+    isDialogOpen: boolean;
+    setIsDialogOpen: (isOpen: boolean) => void;
+}
 
-export function RegistrationModal() {
+
+export function RegistrationModal({ isDialogOpen, setIsDialogOpen }: RegistrationModalProps) {
 
     const [formData, setFormData] = useState({
         tutorsEmail: "",
     });
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const [errors, setErrors] = useState({
         tutorsEmail: "",
@@ -97,12 +100,6 @@ export function RegistrationModal() {
 
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-
-
-
-            <DialogTrigger asChild >
-                <Button variant="outline" className="bg-green-400 text-white rounded-3xl max-w-full shadow-md hover:bg-green-500" onClick={() => setIsDialogOpen(true)}>Finalizar Cadastro</Button>
-            </DialogTrigger>
 
 
 
