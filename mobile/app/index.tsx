@@ -167,7 +167,6 @@ export default function Home() {
           rounded-t-[24px]
           items-center justify-end
           pb-5">
-        <View className="absolute w-32 h-1.5 bg-black rounded-full opacity-90 bottom-2" />
         
       </View>
       
