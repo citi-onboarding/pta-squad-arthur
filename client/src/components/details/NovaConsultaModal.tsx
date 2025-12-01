@@ -59,7 +59,7 @@ export function NovaConsultaModal() {
                                     rounded-3xl 
                                     text-white
                                      shadow
-                                     mx-[2rem]
+                                     mx-
                                      mb-[12px]">
           <CircleCheckBig />
           Agendamento</Button>
@@ -210,8 +210,8 @@ export function NovaConsultaModal() {
                 py-[12px]        
                 rounded-[24px]     
                 gap-[10px]       
-                bg-[#50E678]    
-                hover:bg-[#1FAA53]    
+                bg-[#70DB93]   
+                hover:bg-green-500   
                 text-white           
                 flex items-center justify-center
                 text-md font-medium   
