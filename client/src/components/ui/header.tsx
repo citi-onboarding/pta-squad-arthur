@@ -45,8 +45,8 @@ export function Header() {
             onClick={() => goTo('/')}
             className={`cursor-pointer pb-1 transition duration-150
                 ${activeTab === 'atendimento'
-                ? 'font-semibold text-green-500 border-b-2 border-green-500' // Estilo ATIVO (com borda)
-                : 'text-gray-500 hover:text-gray-700' // Estilo INATIVO
+                ? 'font-semibold border-b-2 border-green-500' // Estilo ATIVO (com borda)
+                : 'hover:text-gray-700' // Estilo INATIVO
                 }`}
         >
             Atendimento
@@ -56,8 +56,8 @@ export function Header() {
             onClick={() => goTo('/registration')}      
             className={`cursor-pointer pb-1 transition duration-150
                 ${activeTab === 'cadastro'
-                ? 'font-semibold text-green-500 border-b-2 border-green-500' // Estilo ATIVO (com bo+rda)
-                : 'text-gray-500 hover:text-gray-700' // Estilo INATIVO
+                ? 'font-semibold border-b-2 border-green-500' // Estilo ATIVO (com bo+rda)
+                : 'hover:text-gray-700' // Estilo INATIVO
                 }`}
         >
             Cadastro
