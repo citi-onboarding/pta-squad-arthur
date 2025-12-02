@@ -5,10 +5,10 @@ export class EmailController {
   async sendConfirmation(req: Request, res: Response) {
     
 
-    const { email, petName, date, time } = req.body;
+    const { email, date, time } = req.body;
 
     // Verifica se os dados chegaram
-    if (!email || !petName) {
+    if (!email) {
       console.log(" ERRO: Faltando email ou petName.");
       return res.status(400).json({ error: "Email e nome do paciente são obrigatórios" });
     }
@@ -23,17 +23,14 @@ export class EmailController {
       </div>
     `;
 
-    try {
-      console.log("🚀 Tentando enviar para o MailService...");
-      
-      // logs credenciais (Para ver se o .env foi lido)
-      console.log(" Status das Credenciais:");
+    try {      
+      // teste para ver se da algum erro
       console.log("   - Usuário:", process.env.MAIL_USER ? "OK (Carregado)" : "ERRO (Vazio)");
       console.log("   - Senha:", process.env.MAIL_PASS ? "OK (Carregado)" : "ERRO (Vazio)");
 
       await MailService.sendMail(email, "Confirmação de Agendamento", emailBody);
       
-      console.log(" SUCESSO! Email enviado.");
+      console.log(" Email enviado.");
       return res.status(200).json({ message: "E-mail enviado com sucesso!" });
     } catch (error) {
       console.log(" ERRO FATAL NO ENVIO (Veja abaixo):");
