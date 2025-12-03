@@ -5,28 +5,27 @@ class MailClient {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS,
-        },
-
-        tls: {
-          rejectUnauthorized: false,
-          ciphers: "SSLv3"
-        },
-        
-        debug: true,
-        logger: true, 
-        connectionTimeout: 10000,
-      });
+      service: 'gmail', // <--- O "Pulo do Gato": Deixa o Nodemailer ajustar configurações ocultas
+      host: "smtp.gmail.com",
+      port: 587,        // Porta padrão de envio (TLS)
+      secure: false,    // OBRIGATÓRIO ser false para porta 587
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false, // Ignora erro de certificado do container
+        ciphers: "SSLv3"
+      },
+      // Configurações de Debug
+      debug: true,
+      logger: true 
+    });
   }
 
   async sendMail(to: string, subject: string, htmlContent: string) {
     try {
-      console.log(`📨 Tentando enviar email via Porta 465 para: ${to}`);
+      console.log(`📨 Tentando enviar via Porta 587 (TLS) para: ${to}`);
       
       const message = await this.transporter.sendMail({
         from: `"Equipe Citi Vet" <${process.env.MAIL_USER}>`,
@@ -35,11 +34,11 @@ class MailClient {
         html: htmlContent,
       });
 
-      console.log("✅ Email enviado com sucesso! ID:", message.messageId);
+      console.log("✅ Email enviado! ID:", message.messageId);
       return message;
     } catch (error) {
-      console.error("❌ Erro FATAL ao enviar email:", error);
-      throw error; // Joga o erro para o Controller pegar
+      console.error("❌ Erro no envio:", error);
+      throw error;
     }
   }
 }
