@@ -1,24 +1,28 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { ArrowBack } from "@/assets/index";
 import { useRouter } from "next/navigation";
 
 interface HistoryCardProps {
+
   date: string;
   time: string;
   type: string;
   doctorName: string;
   consultationId: string,
-  onClick: (id: string) => void;
+  
 }
 
 
 // Componente HistoryCard without onClick implementation on the arrowback image and without the conection with the backend data
-export const HistoryCard: React.FC<HistoryCardProps> = ({ date, time, type, doctorName, consultationId, onClick }) => {
+export const HistoryCard: React.FC<HistoryCardProps> = ({ date, time, type, doctorName, consultationId,  }) => {
 
+  const router = useRouter();
 
   const handleClick = () => {
-    onClick(consultationId);
+    router.push(`/details/${consultationId}`);
   };
 
 
@@ -26,7 +30,7 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ date, time, type, doct
 
   return (
     <div 
-    className="flex items-center justify-between w-full h-[3.25rem] md:h-[4rem] lg:h-[5.125rem] px-6 bg-gray-100 rounded-2xl shadow-md cursor-pointer hover:bg-gray-200 transition-colors"
+    className="flex items-center  w-full h-[3.25rem] md:h-[4rem] lg:h-[5.125rem] px-6 bg-gray-100 rounded-2xl shadow-md cursor-pointer hover:bg-gray-300"
     onClick={handleClick}>
 
       <div className="flex flex-col items-center justify-center border-r p-1.5 gap-2 bg-white rounded-xl">

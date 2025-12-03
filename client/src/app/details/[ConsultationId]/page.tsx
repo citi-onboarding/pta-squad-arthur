@@ -27,7 +27,7 @@ const SPECIES_MAP: Record<string, string> = {
 
 //function to handle dateTime data coming in the international format
 const formatDateTime = (dateTimeString: string) => {
-    // Exemplo: "2025-01-10T16:30Z"
+    // Exemplo: "2025-08-09T00:00:00.000Z"
     const parts = dateTimeString.split("T");
 
     // partes[0] = "2025-01-10"
@@ -41,12 +41,11 @@ const formatDateTime = (dateTimeString: string) => {
         date = ArrayDate[2] + "/" + ArrayDate[1];
     }
 
-    // partes[1] = "16:30Z" -> remove o 'Z'
-    let time = parts[1].replace("Z", "");
-    if (time.length == 8) {
-        time = time.slice(0, 5);
-    }
+    // 00:00:00.000Z => precisamos apenas dos dois primeiros elementos do time_splited
+    let time_splited = parts[1].split(":");
 
+    let time = time_splited[0] + ":" + time_splited[1];
+    
     return { date, time };
 };
 
@@ -100,9 +99,13 @@ export default function Details() {
 
                 try{
 
+                    console.log("1. Buscando consulta atual por ID:", consultationIdString);
+
                     const response = await consultationService.getConsultationById(consultationIdString);
 
-                    const currentConsultation : Consultation = response.data;
+                    const currentConsultation : Consultation = response;
+
+                    console.log("2. Consulta Atual (currentConsultation):", currentConsultation);
 
                     if (currentConsultation){
 
@@ -115,7 +118,12 @@ export default function Details() {
 
                         setPatient(foundPatient);
 
+                        console.log("3. Buscando histórico para o paciente:", patientId);
+
                         const prevsConsults = await consultationService.getPrevsConsultation(patientId, currentConsultation);
+
+                        console.log("4. Consultas Anteriores Encontradas (prevsConsults):", prevsConsults);
+
                         setPrevsConsultations(prevsConsults)
                         
                     } else {
@@ -244,7 +252,7 @@ export default function Details() {
                             <p className="text-base font-bold mr-10">Tipo de Consulta:</p>
                             <div>
                                 <p
-                                    className={`${backGroundColor} lg:w-28 h-full rounded-sm flex justify-center items-center p-1.5`}
+                                    className={`${backGroundColor}  h-full rounded-sm flex justify-center items-center p-1.5`}
                                 >
                                     {consultation[0].type}
                                 </p>
@@ -263,7 +271,7 @@ export default function Details() {
                         <p className="py-8 font-bold text-base sm:text-lg md:text-xl lg:text-2xl ">
                             Histórico de Consulta
                         </p>
-                        <div className="rounded-3xl shadow h-96 lg:h-[28rem] w-full  md:w-96 lg:w-[33rem] overflow-auto  px-6 py-4 flex dap-1 md:gap-1.5 lg:gap-2 flex-col justify-between border-1">
+                        <div className="rounded-3xl shadow h-96 lg:h-[28rem] w-full  md:w-96 lg:w-[33rem] overflow-auto  px-6 py-4 flex gap-8 flex-col  border-1">
                             {prevsConsultations && prevsConsultations.length > 0 ? (
                                 prevsConsultations.map((consult) => {
 

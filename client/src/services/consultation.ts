@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import api from "./api";
 import { AxiosResponse } from "axios";
 /*
@@ -59,12 +60,12 @@ export const consultationService = {
         }
     },
 
-    async getConsultationById(ConsultationId: string) {
+    async getConsultationById(ConsultationId: string): Promise<Consultation> {
 
         try{
 
             const res = await api.get(`/consultation/${ConsultationId}`)
-            return res;
+            return res.data;
 
         } catch(error){
 
@@ -79,7 +80,7 @@ export const consultationService = {
         try{
 
             const res = await api.get(`/consultation/patient/${patientId}`)
-            return res.data;
+            return res.data.consultations;
 
         } catch(error){
 
