@@ -7,11 +7,24 @@ class MailClient {
     this.transporter = nodemailer.createTransport({
         host: process.env.MAIL_HOST,
         port: Number(process.env.MAIL_PORT),
-        secure: false,
+        secure: true,
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASS,
         },
+        tls: {
+          rejectUnauthorized: false
+        },
+        connectionTimeout: 10000,
+        socketTimeout: 10000,
+      });
+
+      this.transporter.verify((error, success) => {
+        if (error) {
+            console.error("🔴 Erro na conexão SMTP:", error);
+        } else {
+            console.log("🟢 Servidor de Email pronto!");
+        }
       });
 
   }

@@ -1,12 +1,12 @@
-import routes from "./routes";
 import dotenv from "dotenv";
+dotenv.config();
+
+import routes from "./routes";
 import express from "express";
 import cors from "cors";
 import "@database";
 import { errorHandler } from "./middlewares/errorHandler"
 import { emailRoutes } from "./routes/EmailRoutes";
-
-dotenv.config();
 
 const app = express();
 
