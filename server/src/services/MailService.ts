@@ -1,26 +1,29 @@
 import nodemailer from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 class MailClient {
   private transporter;
 
   constructor() {
-    const isSecure = process.env.MAIL_PORT === '465';
+    const port = Number(process.env.MAIL_PORT) || 587;
+    const isSecure = port === 465;
 
     this.transporter = nodemailer.createTransport({
         host: process.env.MAIL_HOST,
-        port: Number(process.env.MAIL_PORT),
+        port: port,
         secure: isSecure,
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASS,
         },
         tls: {
-          rejectUnauthorized: false
+          rejectUnauthorized: false, 
         },
+        family: 4,
         connectionTimeout: 10000, 
-      });
+    } as SMTPTransport.Options); 
       
-      console.log(`🔌 Tentando conectar em: ${process.env.MAIL_HOST}:${process.env.MAIL_PORT} (Secure: ${isSecure})`);
+    console.log(`🔌 Configurado para: ${process.env.MAIL_HOST}:${port} (Secure: ${isSecure})`);
   }
 
   async sendMail(to: string, subject: string, htmlContent: string) {

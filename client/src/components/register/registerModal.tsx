@@ -61,7 +61,7 @@ export function RegistrationModal({ isDialogOpen, setIsDialogOpen }: Registratio
             console.error("Erro de conexão:", error);
             setErrors(prev => ({
                 ...prev,
-                apiError: "Erro de conexão. Verifique se o backend está rodando na porta 3001.",
+                apiError: "Erro de conexão.",
             }));
         } finally {
             setIsLoading(false);
