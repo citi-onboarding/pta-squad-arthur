@@ -1,33 +1,33 @@
 import nodemailer from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 class MailClient {
   private transporter;
 
   constructor() {
-    const port = Number(process.env.MAIL_PORT) || 587;
-    const isSecure = port === 465;
-
     this.transporter = nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: port,
-        secure: isSecure,
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASS,
         },
+
         tls: {
-          rejectUnauthorized: false, 
+          rejectUnauthorized: false,
+          ciphers: "SSLv3"
         },
-        family: 4,
-        connectionTimeout: 10000, 
-    } as SMTPTransport.Options); 
-      
-    console.log(`🔌 Configurado para: ${process.env.MAIL_HOST}:${port} (Secure: ${isSecure})`);
+        
+        debug: true,
+        logger: true, 
+        connectionTimeout: 10000,
+      });
   }
 
   async sendMail(to: string, subject: string, htmlContent: string) {
     try {
+      console.log(`📨 Tentando enviar email via Porta 465 para: ${to}`);
+      
       const message = await this.transporter.sendMail({
         from: `"Equipe Citi Vet" <${process.env.MAIL_USER}>`,
         to,
@@ -35,11 +35,11 @@ class MailClient {
         html: htmlContent,
       });
 
-      console.log("Email enviado: %s", message.messageId);
+      console.log("✅ Email enviado com sucesso! ID:", message.messageId);
       return message;
     } catch (error) {
-      console.error("Erro ao enviar email:", error);
-      throw new Error("Falha no envio de email");
+      console.error("❌ Erro FATAL ao enviar email:", error);
+      throw error; // Joga o erro para o Controller pegar
     }
   }
 }
