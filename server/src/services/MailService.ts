@@ -7,7 +7,7 @@ class MailClient {
     this.transporter = nodemailer.createTransport({
         host: process.env.MAIL_HOST,
         port: Number(process.env.MAIL_PORT),
-        secure: false, // Para Gmail use o STARTTLS (não SSL)
+        secure: false,
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASS,
