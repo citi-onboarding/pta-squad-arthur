@@ -60,7 +60,7 @@ interface Consultation {
     doctorName: string;
     description: string;
     type: string;
-    dateTime: string;
+    datetime: string;
     patientId:string
     
 }
@@ -115,11 +115,23 @@ export default function Details() {
 
                         setPatient(foundPatient);
 
+                        const prevsConsults = await consultationService.getPrevsConsultation(patientId, currentConsultation);
+                        setPrevsConsultations(prevsConsults)
                         
+                    } else {
+
+                        setConsultation([]);
+                        setPatient(null);
+                        setPrevsConsultations([]);
                     }
 
                 } catch(error){
                     console.log("Error trying to search datas: ", error);
+
+                    setConsultation([]);
+                    setPatient(null);
+                    setPrevsConsultations([]);
+
                 }
             }
 
@@ -127,6 +139,10 @@ export default function Details() {
 
         }
     }, [consultationIdString]);
+
+
+
+
 
 
 
@@ -199,7 +215,7 @@ export default function Details() {
                             <div className="ml-4 md:ml-6 h-56 flex flex-col justify-between">
                                 <div className="mt-10">
                                     <p className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
-                                        {patient?.name}
+                                        {patient.name}
                                     </p>
                                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl">
                                         {patient.age} Anos
@@ -208,7 +224,7 @@ export default function Details() {
 
                                 <div>
                                     <p className="text-base sm:text-lg md:text-lg lg:text-lg">
-                                        {patient.tutorName}
+                                        {patient?.tutorName}
                                     </p>
                                     <p className="text-base sm:text-lg md:text-lg lg:text-lg">
                                         {consultation[0].doctorName}
@@ -248,20 +264,27 @@ export default function Details() {
                             Histórico de Consulta
                         </p>
                         <div className="rounded-3xl shadow h-96 lg:h-[28rem] w-full  md:w-96 lg:w-[33rem] overflow-auto  px-6 py-4 flex dap-1 md:gap-1.5 lg:gap-2 flex-col justify-between border-1">
-                            {consultation.map((consult, index) => {
-                                // This function is to render the other consultations in the HistoryCard
-                                const { date, time } = formatDateTime(consult.dateTime);
+                            {prevsConsultations && prevsConsultations.length > 0 ? (
+                                prevsConsultations.map((consult) => {
 
-                                return (
-                                    <HistoryCard
-                                        key={index}
-                                        doctorName={consult.doctorName}
-                                        type={consult.type}
-                                        date={date}
-                                        time={time}
-                                    />
-                                );
-                            })}
+                                    const { date, time} = formatDateTime(consult.datetime)
+
+                                    return (
+                                        <HistoryCard 
+                                            consultationId={consult.id} 
+                                            doctorName={consult.doctorName}
+                                            type={consult.type}
+                                            date={date}
+                                            time={time}
+                                        />
+                                    );
+                                })
+                            ) : (
+
+                                <p className="text-center text-gray-500 mt-10">
+                                    Nenhuma consulta anterior encontrada para este paciente.
+                                </p>
+                            )} 
                         </div>
                     </div>
                 </div>

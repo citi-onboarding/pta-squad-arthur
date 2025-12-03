@@ -92,9 +92,7 @@ export const consultationService = {
 
         try{
 
-            const allConsultationsReponse: Consultation[]= await this.getAllConsulationsByPatientId(patientId);
-
-            const allConsultations = allConsultationsReponse;
+            const allConsultations: Consultation[]= await this.getAllConsulationsByPatientId(patientId);
 
             const curretentDatetime = parseDate(currentConsultation.datetime);
 
@@ -105,7 +103,7 @@ export const consultationService = {
                 }
 
                 const consultationDateTime = parseDate(consultation.datetime);
-                return consultationDateTime < curretentDatetime;
+                return consultationDateTime <= curretentDatetime;
             })
 
             const sortedPreviousConsultations = previousConsultations.sort((a, b) =>{
