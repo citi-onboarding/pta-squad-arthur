@@ -2,6 +2,7 @@ import { Router } from 'express';
 import UserRouter from './UserRoutes';
 import ConsultationRouter from './ConsultationRoutes';
 import PatientRouter from './PatientRoutes';
+import { emailRoutes } from "./EmailRoutes"; 
 
 const router = Router();
 
@@ -9,6 +10,7 @@ const router = Router();
 router.use('/user', UserRouter);
 router.use('/consultation', ConsultationRouter)
 router.use('/patient', PatientRouter); 
+router.use(emailRoutes)
 
 // Default route
 router.route('/').get((_, res) => {

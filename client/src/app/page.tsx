@@ -6,6 +6,7 @@ import { AppointmentCard } from "@/components/service/AppointmentCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@/assets";
+import { RegistrationModal } from "@/components/register/registerModal";
 
 const mockAppointments = [
   {
@@ -44,7 +45,7 @@ const mockAppointments = [
     time: "01:51",
     petName: "Babe",
     ownerName: "Julia",
-    doctorName: "Ana",
+    doctorName: "Ana maria",
     species: "PIG",
     consultationType: "Retorno",
   },
@@ -91,6 +92,8 @@ export default function Home() {
     ? `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`
     : null;
 
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     
 return (
     <main className="min-h-screen bg-white py-12 px-4 md:px-8 font-sans">
@@ -112,6 +115,13 @@ return (
                         Limpar
                     </Button>
                 </div>
+                <div>
+            <h1>Atendimento</h1>
+                <Button onClick={() => setIsDialogOpen(true)}>Abrir Modal de Cadastro</Button>
+                
+                {/* exibi o modal para testar o nodemailer*/}
+                <RegistrationModal isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+            </div>
                 <div className="w-full flex justify-between items-end">
                     <div className="bg-gray-100 p-3 rounded-xl shadow-sm inline-flex gap-4">
                         <button
