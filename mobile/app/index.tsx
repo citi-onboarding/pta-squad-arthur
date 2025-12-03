@@ -40,21 +40,17 @@ export default function Home() {
     try {
       const dataFromApi = await getAllConsultations();
       
-      // Mapeando os dados do Backend (Prisma) para o Frontend (Card)
       const formattedData = dataFromApi.map((item) => {
         const dateObj = new Date(item.datetime);
         
         return {
           id: item.id,
-          // Formata dia/mês (ex: 18/02)
           date: dateObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }),
-          // Formata hora (ex: 14:00)
           time: dateObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-          // Pega dados do paciente ou usa fallback se o include falhar
           petName: item.patient?.name || "Paciente",
           ownerName: item.patient?.tutorName || "Tutor",
           doctorName: item.doctorName,
-          consultationType: item.type, // ou item.description se preferir
+          consultationType: item.type,
           rawDate: dateObj
         };
       });
