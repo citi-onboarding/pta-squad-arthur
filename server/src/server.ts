@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import "@database";
 import { errorHandler } from "./middlewares/errorHandler"
+import { emailRoutes } from "./routes/EmailRoutes";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 app.use(express.static(__dirname + "/public"));
+app.use(emailRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3001;
