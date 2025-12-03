@@ -11,7 +11,10 @@ services:
       - "${SERVER_PORT}:3001"
     volumes:
       - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+      # A LINHA ABAIXO É O TRUQUE:
+      # Sem os dois pontos (:), isso diz ao Docker para ignorar o que está no host 
+      # e usar a pasta node_modules que foi criada dentro da imagem durante o build.
+      - /home/node/app/node_modules
     depends_on:
       db:
         condition: service_healthy
@@ -38,4 +41,4 @@ services:
 
 volumes:
   pgdata:
-  node_modules:
+  # O volume 'node_modules' foi removido daqui pois agora é anônimo dentro do serviço server
