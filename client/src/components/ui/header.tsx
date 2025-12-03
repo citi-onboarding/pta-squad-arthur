@@ -1,7 +1,8 @@
 'use client'; //necessário para todos os arquivos que usam algum hook do react
 
 import * as React from 'react';
-import { useState } from 'react';
+import { useCallback } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LogoCITiPet } from '@/assets';
@@ -12,7 +13,15 @@ type ActiveTab = 'atendimento' | 'cadastro';
 
 export function Header() {
   // 1. Definição do Estado
-  const [activeTab, setActiveTab] = useState<ActiveTab>('atendimento');
+  
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const activeTab: ActiveTab = pathname?.startsWith('/registration') ? 'cadastro' : 'atendimento';
+
+  const goTo = useCallback((path: string) => {
+    router.push(path);
+  }, [router]);
 
   return (
     <header className="flex justify-between items-center w-full p-4 border-b border-gray-200 bg-white">
@@ -33,22 +42,22 @@ export function Header() {
       {/* 2. Centro: Navegação Condicional */}
       <nav className="flex items-center space-x-8">
         <button
-            onClick={() => setActiveTab('atendimento')}
+            onClick={() => goTo('/')}
             className={`cursor-pointer pb-1 transition duration-150
                 ${activeTab === 'atendimento'
-                ? 'font-semibold text-green-500 border-b-2 border-green-500' // Estilo ATIVO (com borda)
-                : 'text-gray-500 hover:text-gray-700' // Estilo INATIVO
+                ? 'font-semibold border-b-2 border-green-500' // Estilo ATIVO (com borda)
+                : 'hover:text-gray-700' // Estilo INATIVO
                 }`}
         >
             Atendimento
         </button>
 
         <button     // Utilzando como base de componente para visualização apenas no momento, adicionar mudança de página utilizando ''link'' ou ''router'' posteriormente. (perguntar a athurzao)
-            onClick={() => setActiveTab('cadastro')}      
+            onClick={() => goTo('/registration')}      
             className={`cursor-pointer pb-1 transition duration-150
                 ${activeTab === 'cadastro'
-                ? 'font-semibold text-green-500 border-b-2 border-green-500' // Estilo ATIVO (com bo+rda)
-                : 'text-gray-500 hover:text-gray-700' // Estilo INATIVO
+                ? 'font-semibold border-b-2 border-green-500' // Estilo ATIVO (com bo+rda)
+                : 'hover:text-gray-700' // Estilo INATIVO
                 }`}
         >
             Cadastro
