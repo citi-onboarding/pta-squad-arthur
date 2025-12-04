@@ -3,8 +3,6 @@ import { Cat, Dog, Cow, Sheep, Pig, Alarm } from "@assets";
 import React, { useEffect, useState } from "react";
 import { getSpeciesByPatientId } from "../../services/Patient";
 
-// basicamente eu apenas atualizei os métodos inerentes ao native e modifiquei os classnames em relação ao arquivo original de matheus
-
 interface AppointmentCardProps {
   patientId: string;
   date: string;
@@ -15,8 +13,6 @@ interface AppointmentCardProps {
   species?: string;
   consultationType: string;
 }
-
-
 
 export function AppointmentCardMobile({
   date,
@@ -32,7 +28,6 @@ export function AppointmentCardMobile({
   const [currentSpecies, setCurrentSpecies] = useState<string | undefined>(speciesProp || "");
 
   const fetchSpecies = async () => {
-
     if (speciesProp) {
       return;
     }
@@ -52,7 +47,7 @@ export function AppointmentCardMobile({
   let bgColor = "";
   switch (consultationType) {
     case "Primeira Consulta":
-      bgColor = "bg-[#BFB5FF]"; 
+      bgColor = "bg-[#BFB5FF]";
       break;
     case "Vacinação":
       bgColor = "bg-[#AAE1FF]";
@@ -64,26 +59,41 @@ export function AppointmentCardMobile({
       bgColor = "bg-[#FF641999]";
   }
 
-  let SpeciesImage: React.ComponentType<any>;
-  switch (currentSpecies) {
-    case "CAT":
-      SpeciesImage = Cat;
-      break;
-    case "DOG":
-      SpeciesImage = Dog;
-      break;
-    case "COW":
-      SpeciesImage = Cow;
-      break;
-    case "SHEEP":
-      SpeciesImage = Sheep;
-      break;
-    case "PIG":
-      SpeciesImage = Pig;
-      break;
-    default:
-      SpeciesImage = Cat; 
-  }
+  const renderSpeciesImage = () => {
+    const imgWidth = 56.26;
+    const imgHeight = 57;
+
+    if (currentSpecies === "DOG") {
+      return (
+        <Image 
+          source={Dog} 
+          style={{ width: imgWidth, height: imgHeight }} 
+          resizeMode="contain"
+          fadeDuration={0} // <--- ISSO REMOVE O ATRASO VISUAL
+        />
+      );
+    }
+
+    let SvgComponent;
+    switch (currentSpecies) {
+      case "CAT":
+        SvgComponent = Cat;
+        break;
+      case "COW":
+        SvgComponent = Cow;
+        break;
+      case "SHEEP":
+        SvgComponent = Sheep;
+        break;
+      case "PIG":
+        SvgComponent = Pig;
+        break;
+      default:
+        SvgComponent = Cat; 
+    }
+
+    return <SvgComponent width={imgWidth} height={imgHeight} />;
+  };
 
   return (
     <View className={`flex-row justify-between items-center
@@ -99,7 +109,8 @@ export function AppointmentCardMobile({
             px-[6px] py-[12px] 
             items-center
             gap-[8px]">
-        <Alarm></Alarm>
+
+        <Alarm width={20} height={20} />
         <Text className="text-xs font-bold text-gray-800">{date}</Text>
         <Text className="text-xs font-bold text-gray-800">{time}</Text>
       </View>
@@ -113,18 +124,18 @@ export function AppointmentCardMobile({
       </View>
 
       <View className="justify-between items-center py-1 mr-4">
-        {/* Imagem do Pet */}
-        <SpeciesImage/>
+        
+        {renderSpeciesImage()}
 
-            <View className="bg-white rounded-lg px-3 py-1 shadow-sm mt-1">
-                <Text
-                className="text-[10px] font-bold text-gray-800"
-                numberOfLines={1} 
-                >
-                {consultationType}
-                </Text>
-            </View>
-            </View>
+        <View className="bg-white rounded-lg px-3 py-1 shadow-sm mt-1">
+            <Text
+              className="text-[10px] font-bold text-gray-800"
+              numberOfLines={1} 
+            >
+              {consultationType}
+            </Text>
+        </View>
+      </View>
     </View>
   );
 }
