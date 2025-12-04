@@ -35,11 +35,7 @@ const formatDateTime = (dateTimeString: string) => {
     let ArrayDate = Rawdate.split("-");
     let date;
 
-    if (ArrayDate[0] != "2025") {
-        date = ArrayDate[2] + "/" + ArrayDate[1] + "/" + ArrayDate[0];
-    } else {
-        date = ArrayDate[2] + "/" + ArrayDate[1];
-    }
+    date = ArrayDate[2] + "/" + ArrayDate[1] + "/" + ArrayDate[0];
 
     // 00:00:00.000Z => precisamos apenas dos dois primeiros elementos do time_splited
     let time_splited = parts[1].split(":");
