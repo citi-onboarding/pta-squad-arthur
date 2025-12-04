@@ -5,32 +5,29 @@ class MailClient {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: Number(process.env.MAIL_PORT),
-        secure: false,
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASS,
         },
+
         tls: {
-          rejectUnauthorized: false
+          rejectUnauthorized: false,
+          ciphers: "SSLv3"
         },
+        
+        debug: true,
+        logger: true, 
         connectionTimeout: 10000,
-        socketTimeout: 10000,
       });
-
-      this.transporter.verify((error, success) => {
-        if (error) {
-            console.error("🔴 Erro na conexão SMTP:", error);
-        } else {
-            console.log("🟢 Servidor de Email pronto!");
-        }
-      });
-
   }
 
   async sendMail(to: string, subject: string, htmlContent: string) {
     try {
+      console.log(`📨 Tentando enviar email via Porta 465 para: ${to}`);
+      
       const message = await this.transporter.sendMail({
         from: `"Equipe Citi Vet" <${process.env.MAIL_USER}>`,
         to,
@@ -38,11 +35,11 @@ class MailClient {
         html: htmlContent,
       });
 
-      console.log("Email enviado: %s", message.messageId);
+      console.log("✅ Email enviado com sucesso! ID:", message.messageId);
       return message;
     } catch (error) {
-      console.error("Erro ao enviar email:", error);
-      throw new Error("Falha no envio de email");
+      console.error("❌ Erro FATAL ao enviar email:", error);
+      throw error; // Joga o erro para o Controller pegar
     }
   }
 }
