@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { AppointmentCardMobile } from "../src/components/AppointmentCardMobile";
-import { getAllConsultations, ConsultationData } from "../services/Consultation";
+import { getAllConsultations } from "../services/Consultation";
 
 import { 
   LogoCiti,
@@ -21,6 +21,7 @@ interface FormattedAppointment {
   doctorName: string;
   consultationType: string;
   rawDate: Date; // Usado para ordenar/filtrar
+  patientId: string;
 }
 
 // Função auxiliar que decide se um horário pertence a um período do dia
@@ -54,7 +55,8 @@ export default function Home() {
           ownerName: item.patient?.tutorName || "Tutor",
           doctorName: item.doctorName,
           consultationType: item.type,
-          rawDate: dateObj
+          rawDate: dateObj,
+          patientId: item.patientId
         };
       });
 
