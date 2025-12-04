@@ -1,16 +1,6 @@
-// Importando as imagens (assumindo que você renomeou, se não, use o nome exato entre aspas)
-import LogoCiti from './logo-citi.png';
-import SunIcon from './sun.png';
-import CloudIcon from './cloud.png';
-import MoonIcon from './moon.png';
-import ClockIcon from './clock.png'; // Verifique se você tem esse arquivo
+import Citi from './citi.svg';
 
 // Exportando tudo junto
 export {
-  LogoCiti,
-  Cat3D,
-  SunIcon,
-  CloudIcon,
-  MoonIcon,
-  ClockIcon
+  Citi
 };
