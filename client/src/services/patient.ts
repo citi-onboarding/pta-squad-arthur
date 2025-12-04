@@ -1,4 +1,5 @@
 import api from "./api";
+import { Consultation } from "./consultation";
 
 /*
 model Patient {
@@ -11,22 +12,12 @@ model Patient {
 }
 */
 
-export interface Consultation {
-
-    consultationId: string,
-    doctorName: string,
-    description: string,
-    type: string,
-    datetime: string,
-    patientId: string
-
-  
-}
 
 
-interface Patient{
 
-    patientId: string,
+export interface Patient{
+
+    id: string,
     name: string,
     tutorName: string,
     age: number,
@@ -35,9 +26,9 @@ interface Patient{
 
 }
 
-interface PatientInformations{
+export interface PatientInformations{
 
-    patientId: string,
+    id: string,
     name: string,
     tutorName: string,
     age: number,

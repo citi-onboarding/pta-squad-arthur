@@ -8,9 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -23,33 +25,72 @@ import {
 } from "@/components/ui/select";
 import { LogoCITiPet, CalendarIcon, AlarmIcon } from "@/assets";
 import { CircleCheckBig } from "lucide-react";
+import { consultationService } from "@/services/consultation";
 
-export function NovaConsultaModal() {
+
+
+interface NewConsultationModalProps {
+      id: string; // o id do paciente
+}
+
+function DateFormatting (date: string, time: string){
+
+    let datetime = `${date}T${time}:00.000Z`;
+
+    return datetime;
+}
+
+export function NovaConsultaModal({ id } : NewConsultationModalProps) {
+
+  const [isOpen, setIsOpen] = useState(false);
+
   const [medico, setMedico] = useState('');
   const [dataAtendimento, setDataAtendimento] = useState('');
   const [horarioAtendimento, setHorarioAtendimento] = useState('');
   const [tipoConsulta, setTipoConsulta] = useState('');
+  const [descrição, setDescrição] = useState('');
 
 
   // Essa função será chamada ao clicar em finalizar. apertando f12, verá as informações enviadas
-  const Submit = (e: React.FormEvent) => {
+  const Submit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      medico,
-      dataAtendimento,
-      horarioAtendimento,
-      tipoConsulta
-    });
+    const datetime = DateFormatting(dataAtendimento, horarioAtendimento);
 
-    setMedico('');
-    setDataAtendimento('');
-    setHorarioAtendimento('');
-    setTipoConsulta('');
+    const newConsultationData = {
+
+      doctorName: medico,
+      description: descrição,
+      type: tipoConsulta,
+      datetime: datetime,
+      patientId: id
+    }
+
+    try{
+
+        console.log(dataAtendimento);
+        await consultationService.createConsultation(newConsultationData);
+
+        console.log(newConsultationData);
+
+        setMedico('');
+        setDataAtendimento('');
+        setHorarioAtendimento('');
+        setTipoConsulta('');
+        setDescrição('')
+        setIsOpen(false);
+
+    } catch(error){
+
+      console.error("Error trying to schedule a new consultation");
+      alert("Erro ao agendar a consulta. Verifique os dados e tente novamente.")
+
+    }
+    
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="
                                     bg-[#70DB93]
@@ -93,6 +134,11 @@ export function NovaConsultaModal() {
             Preencha os dados da{" "}
             <span className="font-semibold">consulta</span>
           </DialogTitle>
+
+          <DialogDescription className="sr-only">
+            Formulário para agendamento de uma nova consulta para o paciente.
+          </DialogDescription>
+
         </DialogHeader>
 
 
@@ -122,11 +168,11 @@ export function NovaConsultaModal() {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Tipos de Consulta</SelectLabel>
-                    <SelectItem value="primeira">Primeira Consulta</SelectItem>
-                    <SelectItem value="retorno">Retorno</SelectItem>
-                    <SelectItem value="checkup">Check-up</SelectItem>
-                    <SelectItem value="vacinacao">Vacinação</SelectItem>
-                    <SelectItem value="emergencia">Emergência</SelectItem>
+                    <SelectItem value="Primeira Consulta">Primeira Consulta</SelectItem>
+                    <SelectItem value="Retorno">Retorno</SelectItem>
+                    <SelectItem value="Check-up">Check-up</SelectItem>
+                    <SelectItem value="Vacinação">Vacinação</SelectItem>
+                    <SelectItem value="Emergência">Emergência</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -199,8 +245,27 @@ export function NovaConsultaModal() {
                   />
                 </span>
               </div>
+
             </div>
           </div>
+          
+
+          {/*Descrição da consulta */}
+          <div className="flex flex-col space-y-1 mt-4">
+            <Label className="text-base font-bold text-black leading-[110%]">
+              Descrição da consulta
+            </Label>
+            
+              <Textarea 
+              value={descrição}
+              onChange={(e) => setDescrição(e.target.value)} 
+              required
+              placeholder="Informe uma descrição da consulta..."
+              className="w-full min-h-24 max-h-40 rounded-[8px] border-[1px] border-[#101010] p-4 text-base placeholder:text-gray-400" 
+              />
+          </div>
+
+
           <Button
             type="submit"
             className="

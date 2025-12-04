@@ -1,6 +1,5 @@
 import { Router } from "express";
 import ConsultationController from "src/controllers/ConsultationController";
-import consultationRepository from "src/repositories/consultationRepository";
 
 const ConsultationRouter = Router();
 

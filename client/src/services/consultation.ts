@@ -25,9 +25,8 @@ export interface CreatingTheConsultationData {
     doctorName: string,
     description: string,
     type: string,
-    datetime: string,
+    datetime: string
     patientId: string
-
   
 }
 

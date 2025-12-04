@@ -6,8 +6,8 @@ import { Sheep, Cat, Pig, Cow, Horse, Dog, SimpleArrowBack } from "@/assets";
 import Image from "next/image";
 import { NovaConsultaModal } from "@/components/details/NovaConsultaModal";
 import { HistoryCard } from "@/components/details/HistoryCard";
-import { consultationService } from "@/services/consultation";
-import { patientService }  from "@/services/patient";
+import { consultationService, Consultation } from "@/services/consultation";
+import { patientService, PatientInformations } from "@/services/patient";
 
 
 
@@ -48,31 +48,6 @@ const formatDateTime = (dateTimeString: string) => {
     
     return { date, time };
 };
-
-
-
-
-
-interface Consultation {
-
-    id: string;
-    doctorName: string;
-    description: string;
-    type: string;
-    datetime: string;
-    patientId:string
-    
-}
-
-interface PatientInformations{
-
-    patientId: string,
-    name: string,
-    tutorName: string,
-    age: number,
-    species: string,
-
-}
 
 
 
@@ -183,6 +158,9 @@ export default function Details() {
         case "Check-up":
             backGroundColor = "bg-[#9CFF95]";
             break;
+        case "Emergência":
+            backGroundColor = 'bg-[#FF7F7F]'
+            break
         case "Retorno":
         default:
             backGroundColor = "bg-[#FF641999]";
@@ -263,7 +241,8 @@ export default function Details() {
                             <p className="font-bold text-base mt-[12px]">
                                 Deseja Realizar Outra Consulta?
                             </p>
-                            <NovaConsultaModal />
+                            <NovaConsultaModal 
+                            id={patient.id}/>
                         </div>
                     </div>
 
@@ -278,7 +257,8 @@ export default function Details() {
                                     const { date, time} = formatDateTime(consult.datetime)
 
                                     return (
-                                        <HistoryCard 
+                                        <HistoryCard
+                                            key={consult.id}
                                             consultationId={consult.id} 
                                             doctorName={consult.doctorName}
                                             type={consult.type}
