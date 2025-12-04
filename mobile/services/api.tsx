@@ -6,7 +6,7 @@ import axios from 'axios';
 // 3. Certifique-se que seu celular e PC estão no MESMO Wi-Fi.
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001', 
+  baseURL: 'https://pta-squad-arthur.onrender.com/', 
   headers: {
     'Content-Type': 'application/json',
   },

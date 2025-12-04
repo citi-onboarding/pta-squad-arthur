@@ -3,10 +3,13 @@ import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } fr
 import { AppointmentCardMobile } from "../src/components/AppointmentCardMobile";
 import { getAllConsultations, ConsultationData } from "../services/Consultation";
 
-const sun = require("../src/assets/sun.png");
-const cloud = require("../src/assets/cloud.png");
-const moon = require("../src/assets/moon.png");
-const logo = require("../src/assets/logo-citi.png");
+import { 
+  LogoCiti,
+  Sun,
+  Cloud,
+  Moon
+ } from "@assets";
+
 
 // Interface para os dados FORMATADOS que o Card espera
 interface FormattedAppointment {
@@ -87,12 +90,7 @@ export default function Home() {
       >
         
         <View className="items-center mb-8">
-          <Image
-            source={logo}
-            className="w-10/12 max-w-[143px]"
-            style={{ aspectRatio: 143 / 54 }}
-            resizeMode="contain"
-          />
+          <LogoCiti></LogoCiti>
         </View>
 
         <View className="mb-8">
@@ -121,21 +119,21 @@ export default function Home() {
             className={`p-2 rounded-full ${selected === "morning" ? "bg-yellow-100" : ""}`}
             onPress={() => setSelected("morning")}
           >
-            <Image source={sun} className="w-6 h-6" resizeMode="contain" />
+            <Cloud></Cloud>
           </TouchableOpacity>
 
           <TouchableOpacity
             className={`p-2 rounded-full ${selected === "afternoon" ? "bg-blue-100" : ""}`}
             onPress={() => setSelected("afternoon")}
           >
-            <Image source={cloud} className="w-6 h-6" resizeMode="contain" />
+            <Sun></Sun>
           </TouchableOpacity>
 
           <TouchableOpacity
             className={`p-2 rounded-full ${selected === "night" ? "bg-purple-100" : ""}`}
             onPress={() => setSelected("night")}
           >
-            <Image source={moon} className="w-6 h-6" resizeMode="contain" />
+            <Moon></Moon>
           </TouchableOpacity>
         </View>
 
