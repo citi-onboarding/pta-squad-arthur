@@ -88,8 +88,8 @@ export default function Home() {
     const handleReset = () => setSearchTerm('');
     const handleClearDate = () => setDate(undefined);
     const selectedDateString = date
-    ? `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`
-    : null;
+    ? `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`
+    : null;
 
     
 return (

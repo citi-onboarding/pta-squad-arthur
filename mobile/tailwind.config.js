@@ -1,10 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-import nativewindPreset from "nativewind/preset";
+const nativewindPreset = require("nativewind/preset");
 
-export default {
-  // NOTE: Update this to include the paths to all of your component files.
+module.exports = {
+  // Garanta que os caminhos batem com suas pastas reais
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
+  
   presets: [nativewindPreset],
+  
   theme: {
     extend: {
       fontFamily: {

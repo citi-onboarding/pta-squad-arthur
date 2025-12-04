@@ -1,8 +1,10 @@
 import { View, Text, Image } from "react-native";
-
-// basicamente eu apenas atualizei os métodos inerentes ao native e modifiquei os classnames em relação ao arquivo original de matheus
+import { Cat, Dog, Cow, Sheep, Pig, Alarm } from "@assets";
+import React, { useEffect, useState } from "react";
+import { getSpeciesByPatientId } from "../../services/Patient";
 
 interface AppointmentCardProps {
+  patientId: string;
   date: string;
   time: string;
   petName: string;
@@ -19,14 +21,33 @@ export function AppointmentCardMobile({
   ownerName,
   doctorName,
   consultationType,
+  patientId,
+  species: speciesProp
 }: AppointmentCardProps) {
-  const PetImage = require("../assets/cat-3d.png");
-  const ClockIcon = require("../assets/alarm.png"); 
+
+  const [currentSpecies, setCurrentSpecies] = useState<string | undefined>(speciesProp || "");
+
+  const fetchSpecies = async () => {
+    if (speciesProp) {
+      return;
+    }
+
+    try {
+      const result = await getSpeciesByPatientId(patientId);
+      setCurrentSpecies(result);
+    } catch (error) {
+      console.error("Erro ao buscar espécie do paciente no card:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchSpecies();
+  }, [patientId]);
 
   let bgColor = "";
   switch (consultationType) {
     case "Primeira Consulta":
-      bgColor = "bg-[#BFB5FF]"; 
+      bgColor = "bg-[#BFB5FF]";
       break;
     case "Vacinação":
       bgColor = "bg-[#AAE1FF]";
@@ -37,6 +58,42 @@ export function AppointmentCardMobile({
     default:
       bgColor = "bg-[#FF641999]";
   }
+
+  const renderSpeciesImage = () => {
+    const imgWidth = 56.26;
+    const imgHeight = 57;
+
+    if (currentSpecies === "DOG") {
+      return (
+        <Image 
+          source={Dog} 
+          style={{ width: imgWidth, height: imgHeight }} 
+          resizeMode="contain"
+          fadeDuration={0} // <--- ISSO REMOVE O ATRASO VISUAL
+        />
+      );
+    }
+
+    let SvgComponent;
+    switch (currentSpecies) {
+      case "CAT":
+        SvgComponent = Cat;
+        break;
+      case "COW":
+        SvgComponent = Cow;
+        break;
+      case "SHEEP":
+        SvgComponent = Sheep;
+        break;
+      case "PIG":
+        SvgComponent = Pig;
+        break;
+      default:
+        SvgComponent = Cat; 
+    }
+
+    return <SvgComponent width={imgWidth} height={imgHeight} />;
+  };
 
   return (
     <View className={`flex-row justify-between items-center
@@ -52,7 +109,8 @@ export function AppointmentCardMobile({
             px-[6px] py-[12px] 
             items-center
             gap-[8px]">
-        <Image source={ClockIcon} className="w-5 h-5 opacity-90 mb-1" resizeMode="contain" />
+
+        <Alarm width={20} height={20} />
         <Text className="text-xs font-bold text-gray-800">{date}</Text>
         <Text className="text-xs font-bold text-gray-800">{time}</Text>
       </View>
@@ -66,22 +124,18 @@ export function AppointmentCardMobile({
       </View>
 
       <View className="justify-between items-center py-1 mr-4">
-        {/* Imagem do Pet */}
-            <Image
-                source={PetImage}
-                className="w-[60px] h-[60px]"
-                resizeMode="contain"
-            />
+        
+        {renderSpeciesImage()}
 
-            <View className="bg-white rounded-lg px-3 py-1 shadow-sm mt-1">
-                <Text
-                className="text-[10px] font-bold text-gray-800"
-                numberOfLines={1} 
-                >
-                {consultationType}
-                </Text>
-            </View>
-            </View>
+        <View className="bg-white rounded-lg px-3 py-1 shadow-sm mt-1">
+            <Text
+              className="text-[10px] font-bold text-gray-800"
+              numberOfLines={1} 
+            >
+              {consultationType}
+            </Text>
+        </View>
+      </View>
     </View>
   );
 }
