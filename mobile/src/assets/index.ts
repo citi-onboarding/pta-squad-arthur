@@ -8,7 +8,7 @@ import Moon from './moon.svg';
 import Sheep from './sheep.svg';
 import Cow from './cow.svg';
 import Horse from './horse.svg';
-import Dog from './DOG.png'
+import Dog from './DOG.png';
 
 
 // Exportando tudo junto
