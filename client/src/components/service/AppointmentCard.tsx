@@ -26,6 +26,9 @@ interface AppointmentCardProps {
   onClick?: () => void;
 }
 
+const truncate = (str: string, max: number) =>
+  str.length > max ? str.substring(0, max) + "..." : str;
+
 export function AppointmentCard({
   id,
   date,
@@ -82,14 +85,14 @@ export function AppointmentCard({
         <div className="flex-grow flex flex-row justify-center items-center gap-4 px-4 min-w-0">
           <div className="flex flex-col items-center">
             <h2 className="text-xs font-bold text-[#000000]">
-              {petName}{" "}
+              {truncate(petName, 9)}{" "}
               <span className="text-xs font-normal text-[#000000]">
-                / {ownerName}
+                / {truncate(ownerName, 9)}
               </span>
             </h2>
           </div>
           <p className="text-xs font-normal text-[#000000]">
-            Dr. <span>{doctorName}</span>
+            Dr. <span>{truncate(doctorName, 15)}</span>
           </p>
         </div>
         {/* 3. Bloco Direito: Imagem e Tag de Consulta (Relative) */}
