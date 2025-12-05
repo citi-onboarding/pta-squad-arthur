@@ -10,36 +10,8 @@ class ConsultationController {
     try {
       
     const rawData = req.body; 
-    
-    
-    if(rawData.date && rawData.date.includes('/')){ 
-      const parts = rawData.date.split('/'); // [day, month, year]        
-    
-      if(parts.length === 3){
-
-        const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-        rawData.date = isoDate;
-      }
-
       
-    }
-    
-    const combinedDateTime = `${rawData.date}T${rawData.time}:00`; 
-    
-    rawData.datetime = combinedDateTime;
-    
-    
-    delete rawData.date; 
-    delete rawData.time;
-    
-    const consultationdata = ConsultationSchema.parse(rawData);
-
-    if (consultationdata.datetime) {
-      consultationdata.datetime.setSeconds(0, 0); 
-    }
-    
-      
-    const consultation = await consultationRepository.create(consultationdata);
+    const consultation = await consultationRepository.create(rawData);
 
       
     return res.status(201).json({message: 'Consultation created.', data: consultation});

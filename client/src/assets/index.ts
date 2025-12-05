@@ -12,6 +12,7 @@ import CalendarIcon from "./calendar.png";
 import AlarmIcon from "./alarm.png";
 import Plus from "./plus.svg";
 import SimpleArrowBack from "./arrow_back_ios_new.svg"
+import DogSVG from "./dog-file.svg";
 
 export {
   ArrowBack,
@@ -27,5 +28,6 @@ export {
   CalendarIcon,
   AlarmIcon,
   Plus,
-  SimpleArrowBack
+  SimpleArrowBack,
+  DogSVG
 };
