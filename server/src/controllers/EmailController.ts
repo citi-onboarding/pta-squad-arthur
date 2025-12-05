@@ -1,41 +1,34 @@
 import { Request, Response } from "express";
 import MailService from "../services/MailService";
+import { mailTemplate } from "src/services/MailTemplate";
 
 export class EmailController {
   async sendConfirmation(req: Request, res: Response) {
-    
+    const { email, userName, petName, date, time, doctorName } = req.body;
 
-    const { email, date, time } = req.body;
-
-    // Verifica se os dados chegaram
-    if (!email) {
-      console.log(" ERRO: Faltando email ou petName.");
-      return res.status(400).json({ error: "Email e nome do paciente são obrigatórios" });
+    if (!email || !petName || !date || !time) {
+      return res.status(400).json({ 
+        error: "Email, petName, date e time são obrigatórios" 
+      });
     }
 
-    const emailBody = `
-      <div style="font-family: Arial, sans-serif; color: #333;">
-        <h2 style="color: #8257E5;">Consulta Confirmada! </h2>
-        <p>Olá,</p>
-        <p>A consulta do pet foi agendada com sucesso.</p>
-        <p><strong>Data:</strong> ${date}</p>
-        <p><strong>Horário:</strong> ${time}</p>
-      </div>
-    `;
+    const emailBody = mailTemplate(
+      userName || "Tutor(a)",
+      petName,
+      date,
+      time,
+      doctorName || "Veterinário"
+    );
 
-    try {      
-      // teste para ver se da algum erro
-      console.log("   - Usuário:", process.env.MAIL_USER ? "OK (Carregado)" : "ERRO (Vazio)");
-      console.log("   - Senha:", process.env.MAIL_PASS ? "OK (Carregado)" : "ERRO (Vazio)");
-
-      await MailService.sendMail(email, "Confirmação de Agendamento", emailBody);
+    try {
+      console.log("📧 Enviando confirmação para:", email);
+      await MailService.sendMail(email, "Agendamento Confirmado! 🎉", emailBody);
       
-      console.log(" Email enviado.");
+      console.log("✓ Email enviado com sucesso!");
       return res.status(200).json({ message: "E-mail enviado com sucesso!" });
     } catch (error) {
-      console.log(" ERRO FATAL NO ENVIO (Veja abaixo):");
-      console.error(error);
-      return res.status(500).json({ error: "Erro interno ao enviar e-mail" });
+      console.error("❌ Erro ao enviar email:", error);
+      return res.status(500).json({ error: "Erro ao enviar e-mail" });
     }
   }
 }

@@ -24,7 +24,8 @@ import {
 } from "@/services/consultation";
 import type { PetSpecies } from "@/components/service/AppointmentCard";
 
-interface FormData {
+// Exportar a interface para que o Modal possa usá-la se necessário (opcional, mas boa prática)
+export interface FormData {
   nomePaciente: string;
   nomeTutor: string;
   animal: string;
@@ -43,8 +44,12 @@ export default function Home() {
     setValue,
     formState: { errors },
   } = useForm<FormData>();
+
   const [selectedAnimal, setSelectedAnimal] = useState<string | null>(null); // estado para rastrear o animal selecionado ao clicar nele
   const [isDialogOpen, setIsDialogOpen] = useState(false); // estado para controlar a abertura do modal de e-mail de confirmação
+  
+  // NOVO: Estado para armazenar os dados do formulário submetido
+  const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
   const animals = [
     { name: "Ovelha", value: "SHEEP", src: Sheep },
@@ -70,18 +75,23 @@ export default function Home() {
 
       const isoDatePart = data.dataAtendimento;
 
-      const fullDateTime = `${isoDatePart}T${data.horaAtendimento}:00.000Z`;
+      // Cria a data local e converte para ISO (Correção de fuso horário)
+      const localDate = new Date(`${isoDatePart}T${data.horaAtendimento}:00`);
+      const fullDateTime = localDate.toISOString();
 
       const consultationData = {
         doctorName: data.medicoResponsavel,
         description: data.descricao,
         type: data.tipoConsulta,
-
         datetime: fullDateTime,
         patientId: createdPatient.id,
       };
 
       await consultationServices.create(consultationData);
+
+      // NOVO: Salva os dados do formulário no estado para passar pro modal
+      setSubmittedData(data);
+      
       setIsDialogOpen(true);
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
@@ -427,6 +437,7 @@ export default function Home() {
       <RegistrationModal
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
+        data={submittedData}
       />
     </main>
   );

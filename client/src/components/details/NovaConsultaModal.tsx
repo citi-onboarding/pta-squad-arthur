@@ -33,11 +33,10 @@ interface NewConsultationModalProps {
       id: string; // o id do paciente
 }
 
-function DateFormatting (date: string, time: string){
-
-    let datetime = `${date}T${time}:00.000Z`;
-
-    return datetime;
+function DateFormatting(date: string, time: string) {
+  const localDate = new Date(`${date}T${time}:00`);
+  
+  return localDate.toISOString();
 }
 
 export function NovaConsultaModal({ id } : NewConsultationModalProps) {
