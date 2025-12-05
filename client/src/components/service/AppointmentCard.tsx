@@ -79,14 +79,16 @@ export function AppointmentCard({
         </div>
 
         {/* 2. Bloco Central: Pet/Dono e Médico (Flex Grow) */}
-        <div className="flex-grow flex justify-center">
-          <h2 className="text-xs font-bold text-[#000000]">
-            {petName}{" "}
-            <span className="text-xs font-normal text-[#000000]">
-              / {ownerName}
-            </span>
-          </h2>
-          <p className="text-xs font-normal [#000000] ml-10">
+        <div className="flex-grow flex flex-row justify-center items-center gap-4 px-4 min-w-0">
+          <div className="flex flex-col items-center">
+            <h2 className="text-xs font-bold text-[#000000]">
+              {petName}{" "}
+              <span className="text-xs font-normal text-[#000000]">
+                / {ownerName}
+              </span>
+            </h2>
+          </div>
+          <p className="text-xs font-normal text-[#000000]">
             Dr. <span>{doctorName}</span>
           </p>
         </div>

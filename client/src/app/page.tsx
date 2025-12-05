@@ -69,19 +69,17 @@ export default function Home() {
     fetchAppointments();
   }, []); // rodando apenas uma vez na montagem do componente
 
-  // função utilitária para formatar a data ISO em "DD/MM"
   const formatDate = (iso: string) => {
     const d = new Date(iso);
-    d.setHours(d.getHours() + 3); // adicionei  +3 horas para ajustar o fuso horário que tava dando a hora errada com -3
+
     return `${String(d.getDate()).padStart(2, "0")}/${String(
       d.getMonth() + 1
     ).padStart(2, "0")}`;
   };
 
-  // função utilitária para formatar a data ISO em "HH:MM"
   const formatTime = (iso: string) => {
     const d = new Date(iso);
-    d.setHours(d.getHours() + 3); // adicionei  +3 horas para ajustar o fuso horário que tava dando a hora errada com -3
+    // O navegador já converte automaticamente de UTC (banco) para o horário local do usuário
     return `${String(d.getHours()).padStart(2, "0")}:${String(
       d.getMinutes()
     ).padStart(2, "0")}`;

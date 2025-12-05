@@ -70,7 +70,9 @@ export default function Home() {
 
       const isoDatePart = data.dataAtendimento;
 
-      const fullDateTime = `${isoDatePart}T${data.horaAtendimento}:00.000Z`;
+      
+      const localDate = new Date(`${isoDatePart}T${data.horaAtendimento}:00`);
+      const fullDateTime = localDate.toISOString();
 
       const consultationData = {
         doctorName: data.medicoResponsavel,
